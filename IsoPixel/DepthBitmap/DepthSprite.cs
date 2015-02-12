@@ -12,6 +12,7 @@ namespace IsoPixel
     public class DepthSprite : DepthBitmap
     {
         public IList<SpritePosition> sprites = new List<SpritePosition>();
+        public string name;
 
         private DepthBitmap cache;
 
