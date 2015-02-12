@@ -9,7 +9,7 @@ namespace IsoPixel
 {
     public class DepthContainer
     {
-        public IDictionary<string, DepthSprite> sprites = new Dictionary<string,DepthSprite>();
+        public IDictionary<string, DepthSprite> sprites = new Dictionary<string, DepthSprite>();
 
         public static DepthContainer Parse(string json)
         {
@@ -27,11 +27,11 @@ namespace IsoPixel
         {
             sprites[id].ClearCache();
 
-            foreach(var spriteId in sprites.Keys)
+            foreach (var spriteId in sprites.Keys)
             {
                 foreach (var spritePosition in sprites[spriteId].sprites)
                 {
-                    if(spritePosition.id.Equals(id))
+                    if (spritePosition.id.Equals(id))
                     {
                         ClearCacheFor(spriteId);
                     }
