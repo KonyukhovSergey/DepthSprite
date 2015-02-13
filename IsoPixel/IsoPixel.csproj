@@ -45,6 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Utils\BitmapListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Utils\BitmapSize.cs" />
     <Compile Include="Utils\BufferedGraphicsControl.cs">
       <SubType>Component</SubType>

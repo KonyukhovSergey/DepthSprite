@@ -39,6 +39,7 @@ namespace IsoPixel
                 bitmap.Dispose();
                 bitmap = null;
             }
+            Invalidate();
         }
 
         protected abstract void OnBufferSetup(Graphics gr);
