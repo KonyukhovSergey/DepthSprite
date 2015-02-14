@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace IsoPixel
 {
-    public struct DepthPixel
+    public class DepthPixel
     {
         public byte r, g, b, a;
         public int z;
@@ -54,5 +54,11 @@ namespace IsoPixel
         {
             return Color.FromArgb(a, r, g, b);
         }
+
+        public override string ToString()
+        {
+            return r + ";" + g + ";" + b + ";" + a + ";" + z;
+        }
+        
     }
 }

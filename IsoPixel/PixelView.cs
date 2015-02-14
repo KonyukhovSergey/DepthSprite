@@ -29,7 +29,7 @@ namespace IsoPixel
             if (tiles == null)
             {
                 tiles = new FastBitmap[1];
-                tiles[0] = new FastBitmap(Image.FromFile("d:\\brick.png"));
+                //tiles[0] = new FastBitmap(Image.FromFile("d:\\brick.png"));
             }
 
             gr.Clear(Color.WhiteSmoke);

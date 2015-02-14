@@ -29,5 +29,9 @@ namespace IsoPixel
         {
             return index / width;
         }
+
+        public int Width { get { return width; } }
+        public int Height { get { return height; } }
+    
     }
 }

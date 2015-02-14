@@ -14,16 +14,12 @@ namespace IsoPixel
 
         public DepthBitmap()
         {
-            width = 0;
-            height = 0;
-            pixels = new DepthPixel[0];
+            InitPixelsArray(0, 0);
         }
 
         public DepthBitmap(int width, int height)
         {
-            this.width = width;
-            this.height = height;
-            pixels = new DepthPixel[width * height];
+            InitPixelsArray(width, height);
         }
 
         public string bitmap
@@ -53,12 +49,9 @@ namespace IsoPixel
             {
                 byte[] data = Convert.FromBase64String(value);
 
-                width = data[0];
-                height = data[1];
+                InitPixelsArray(data[0], data[1]);
 
                 int position = 2;
-
-                pixels = new DepthPixel[width * height];
 
                 for (int i = 0; i < pixels.Length; i++)
                 {
@@ -95,6 +88,18 @@ namespace IsoPixel
         public DepthPixel PixelAt(int x, int y)
         {
             return IsInBox(x, y) ? pixels[Index(x, y)] : VoidPixel;
+        }
+
+        private void InitPixelsArray(int w, int h)
+        {
+            this.width = w;
+            this.height = h;
+            pixels = new DepthPixel[width * height];
+
+            for (int i = 0; i < pixels.Length; i++)
+            {
+                pixels[i] = new DepthPixel();
+            }
         }
     }
 }

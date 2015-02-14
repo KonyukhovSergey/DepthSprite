@@ -20,31 +20,23 @@ namespace IsoPixel
             gr = Graphics.FromImage(bmp);
         }
 
-        public Graphics Graphics
-        {
-            get
-            {
-                Unlock();
-                return gr;
-            }
-        }
+        public Graphics Graphics { get { Unlock(); return gr; } }
 
-        public Bitmap Bitmap
-        {
-            get
-            {
-                Unlock();
-                return bmp;
-            }
-        }
+        public Bitmap Bitmap { get { Unlock(); return bmp; } }
 
-        public void Set(int color, int x, int y)
+        public int[] Data { get { Lock(); return data; } }
+
+        public int Width { get { return bmp.Width; } }
+
+        public int Height { get { return bmp.Height; } }
+
+        public void SetPixel(int x, int y, int color)
         {
             Lock();
             data[x + y * stride] = color;
         }
 
-        public int Get(int x, int y)
+        public int GetPixel(int x, int y)
         {
             Lock();
             return data[x + y * stride];

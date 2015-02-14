@@ -32,6 +32,12 @@ namespace IsoPixel
             Clear(0, 0, 0, 0, 0);
         }
 
+        public DepthSprite(FastBitmap fastBitmap)
+            : base(fastBitmap.Width, fastBitmap.Height)
+        {
+            From(fastBitmap);
+        }
+
         private void update(IDictionary<string, DepthSprite> container)
         {
             if (cache == null)
@@ -60,7 +66,7 @@ namespace IsoPixel
             Clear(p.r, p.g, p.b, p.a, p.z);
         }
 
-        public void DrawTo(FastBitmap bitmap, IDictionary<string, DepthSprite> container)
+        public void DrawTo(FastGraphics fg, IDictionary<string, DepthSprite> container)
         {
             update(container);
 
@@ -68,7 +74,7 @@ namespace IsoPixel
             {
                 for (int x = 0; x < width; x++)
                 {
-                    bitmap.SetPixel(x, y, cache.PixelAt(x, y).GetColor());
+                    fg.SetPixel(x, y, cache.PixelAt(x, y).GetColor().ToArgb());
                 }
             }
         }
@@ -76,6 +82,7 @@ namespace IsoPixel
         public void From(FastBitmap bitmap)
         {
             Clear(0, 0, 0, 0, 0);
+
             for (int y = 0; y < height; y++)
             {
                 for (int x = 0; x < width; x++)
