@@ -14,11 +14,11 @@ namespace UnitTests
         {
             dc = new DepthContainer();
 
-            dc.sprites["id01"] = new DepthSprite();
-            dc.sprites["id02"] = new DepthSprite(16, 16);
-            dc.sprites["id03"] = new DepthSprite(32, 32);
-            dc.sprites["id03"].sprites.Add(new SpritePosition() { id = "id01", x = 10, y = 10, z = 10 });
-            dc.sprites["id03"].sprites.Add(new SpritePosition() { id = "id02", x = 20, y = 10, z = 10 });
+            dc.Add(new DepthSprite() { id = "id01" });
+            dc.Add(new DepthSprite(16, 16) { id = "id02" });
+            dc.Add(new DepthSprite(8, 8) { id = "id03" });
+            dc["id03"].sprites.Add(new SpritePosition() { id = "id01", x = 10, y = 10, z = 10 });
+            dc["id03"].sprites.Add(new SpritePosition() { id = "id02", x = 20, y = 10, z = 10 });
         }
 
         [TestMethod]

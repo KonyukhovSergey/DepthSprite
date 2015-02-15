@@ -25,7 +25,7 @@ namespace IsoPixel
         {
             get
             {
-                return count * (size + tile + padding) + padding;
+                return count * (size + tile + padding);
             }
         }
 
@@ -62,7 +62,7 @@ namespace IsoPixel
 
         protected override void OnBufferPaint(System.Drawing.Graphics gr)
         {
-            gr.Clear(Color.Wheat);
+            gr.Clear(Color.White);
 
             for (int i = GetFirstVisibleIndex(); i <= GetLastVisibleIndex(); i++)
             {
@@ -112,9 +112,9 @@ namespace IsoPixel
                 selectedIndex = index;
                 Invalidate();
 
-                if (OnSelect != null)
+                if (OnSelectItem != null && selectedIndex >= 0 && selectedIndex < count)
                 {
-                    OnSelect(selectedIndex);
+                    OnSelectItem(selectedIndex);
                 }
             }
             base.OnMouseClick(e);
@@ -170,7 +170,7 @@ namespace IsoPixel
         }
 
         [Category("BitmapListView")]
-        public event OnSelectEvent OnSelect;
+        public event OnSelectItemEvent OnSelectItem;
 
         [Category("BitmapListView")]
         public event OnGetItemTitleEvent OnGetItemTitle;
@@ -212,7 +212,7 @@ namespace IsoPixel
             }
         }
 
-        public delegate void OnSelectEvent(int index);
+        public delegate void OnSelectItemEvent(int index);
         public delegate string OnGetItemTitleEvent(int index);
         public delegate Bitmap OnGetItemBitmapEvent(int index);
     }

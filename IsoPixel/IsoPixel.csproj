@@ -47,6 +47,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DepthSpriteEditor.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Utils\FastGraphics.cs" />
     <Compile Include="Utils\BitmapList.cs">
       <SubType>Component</SubType>
@@ -55,10 +58,8 @@
     <Compile Include="Utils\BufferedGraphicsControl.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="CoordinateCalculator.cs" />
-    <Compile Include="Cube.cs" />
-    <Compile Include="CursorPosition.cs" />
-    <Compile Include="Utils\FastBitmap.cs" />
+    <Compile Include="Utils\CoordinateCalculator.cs" />
+    <Compile Include="Utils\CursorPosition.cs" />
     <Compile Include="IsoEdit.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -71,13 +72,9 @@
     <Compile Include="DepthBitmap\DepthBitmap.cs" />
     <Compile Include="DepthBitmap\DepthSprite.cs" />
     <Compile Include="DepthBitmap\SpritePosition.cs" />
-    <Compile Include="PixelPosition.cs" />
-    <Compile Include="PixelView.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="Utils\PixelPosition.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Sprite.cs" />
     <EmbeddedResource Include="IsoEdit.resx">
       <DependentUpon>IsoEdit.cs</DependentUpon>
     </EmbeddedResource>

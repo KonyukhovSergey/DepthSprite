@@ -22,7 +22,7 @@ namespace IsoPixel
             InitPixelsArray(width, height);
         }
 
-        public string bitmap
+        public string DataBase64
         {
             get
             {
@@ -71,7 +71,7 @@ namespace IsoPixel
             {
                 for (int x = 0; x < source.width; x++)
                 {
-                    if (!IsInBox(px + x, py + y)) continue;
+                    if (!IsInRect(px + x, py + y)) continue;
 
                     DepthPixel sourcePixel = source.pixels[Index(x, y)];
                     DepthPixel destinationPixel = pixels[Index(x + px, y + py)];
@@ -87,13 +87,13 @@ namespace IsoPixel
 
         public DepthPixel PixelAt(int x, int y)
         {
-            return IsInBox(x, y) ? pixels[Index(x, y)] : VoidPixel;
+            return IsInRect(x, y) ? pixels[Index(x, y)] : VoidPixel;
         }
 
-        private void InitPixelsArray(int w, int h)
+        private void InitPixelsArray(int width, int height)
         {
-            this.width = w;
-            this.height = h;
+            this.width = width;
+            this.height = height;
             pixels = new DepthPixel[width * height];
 
             for (int i = 0; i < pixels.Length; i++)

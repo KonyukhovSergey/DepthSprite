@@ -12,7 +12,9 @@ namespace IsoPixel
     public class DepthSprite : DepthBitmap
     {
         public IList<SpritePosition> sprites = new List<SpritePosition>();
+
         public string name;
+        public string id = new Guid().ToString();
 
         private DepthBitmap cache;
 
@@ -21,10 +23,7 @@ namespace IsoPixel
             cache = null;
         }
 
-        public DepthSprite()
-        {
-
-        }
+        public DepthSprite()  { }
 
         public DepthSprite(int width, int height)
             : base(width, height)
@@ -32,13 +31,13 @@ namespace IsoPixel
             Clear(0, 0, 0, 0, 0);
         }
 
-        public DepthSprite(FastBitmap fastBitmap)
-            : base(fastBitmap.Width, fastBitmap.Height)
+        public DepthSprite(Image image)
+            : this(image.Width, image.Height)
         {
-            From(fastBitmap);
+            From(new FastGraphics(image));
         }
 
-        private void update(IDictionary<string, DepthSprite> container)
+        private void update(DepthContainer container)
         {
             if (cache == null)
             {
@@ -66,7 +65,7 @@ namespace IsoPixel
             Clear(p.r, p.g, p.b, p.a, p.z);
         }
 
-        public void DrawTo(FastGraphics fg, IDictionary<string, DepthSprite> container)
+        public void DrawTo(FastGraphics fg, DepthContainer container)
         {
             update(container);
 
@@ -79,7 +78,7 @@ namespace IsoPixel
             }
         }
 
-        public void From(FastBitmap bitmap)
+        public void From(FastGraphics bitmap)
         {
             Clear(0, 0, 0, 0, 0);
 
@@ -87,7 +86,7 @@ namespace IsoPixel
             {
                 for (int x = 0; x < width; x++)
                 {
-                    Color c = bitmap.GetPixel(x, y);
+                    Color c = bitmap.GetColor(x, y);
                     PixelAt(x, y).Set(c.R, c.G, c.B, c.A, 0);
                 }
             }

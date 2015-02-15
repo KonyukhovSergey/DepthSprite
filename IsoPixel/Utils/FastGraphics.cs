@@ -20,6 +20,12 @@ namespace IsoPixel
             gr = Graphics.FromImage(bmp);
         }
 
+        public FastGraphics(Image source)
+            : this(source.Width, source.Height)
+        {
+            Graphics.DrawImage(source, 0, 0);
+        }
+
         public Graphics Graphics { get { Unlock(); return gr; } }
 
         public Bitmap Bitmap { get { Unlock(); return bmp; } }
@@ -40,6 +46,16 @@ namespace IsoPixel
         {
             Lock();
             return data[x + y * stride];
+        }
+
+        public Color GetColor(int x, int y)
+        {
+            return Color.FromArgb(GetPixel(x, y));
+        }
+
+        public void SetPixel(int x, int y, Color color)
+        {
+            SetPixel(x, y, color.ToArgb());
         }
 
         private void Lock()

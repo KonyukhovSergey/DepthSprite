@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ namespace IsoPixel
 {
     public partial class IsoEdit : Form
     {
-        private DepthContainer depthContainer = new DepthContainer();
+        private DepthContainer sprites = new DepthContainer();
 
         public IsoEdit()
         {
@@ -26,25 +27,40 @@ namespace IsoPixel
 
         private void tsmiImportSprite_Click(object sender, EventArgs e)
         {
-            OpenFileDialog ofd = new OpenFileDialog() { DefaultExt = "*.png|.png files", Multiselect = false };
-
-            if (ofd.ShowDialog() == DialogResult.OK)
+            OpenFileDialog openFileDialog = new OpenFileDialog()
             {
-                FastBitmap fb = new FastBitmap(Image.FromFile(ofd.FileName));
-                depthContainer.sprites.Add(Guid.NewGuid().ToString(), new DepthSprite(fb));
-                container.ItemsCount = depthContainer.sprites.Count;
+                DefaultExt = "*.png|.png files",
+                Multiselect = true,
+                RestoreDirectory = true
+            };
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var fileName in openFileDialog.FileNames)
+                {
+                    sprites.Add(new DepthSprite(Image.FromFile(fileName)) { name = Path.GetFileNameWithoutExtension(fileName) });
+                }
+                listSprites.ItemsCount = sprites.Count;
             }
         }
 
-        
-
-        private Bitmap container_OnGetItemBitmap(int index)
+        private Bitmap listSprites_OnGetItemBitmap(int index)
         {
-            var item = depthContainer.sprites.Values.ToArray()[index];
-            FastGraphics fg = new FastGraphics(item.Width,item.Height);
-            item.DrawTo(fg,depthContainer.sprites);
+            var item = sprites[index];
+            FastGraphics fastGraphics = new FastGraphics(item.Width, item.Height);
 
-            return fg.Bitmap;
+            item.DrawTo(fastGraphics, sprites);
+            return fastGraphics.Bitmap;
+        }
+
+        private string listSprites_OnGetItemTitle(int index)
+        {
+            return sprites[index].name;
+        }
+
+        private void listSprites_OnSelectItem(int index)
+        {
+            spriteEditor.SetSprite(sprites[index], sprites);
         }
     }
 }
