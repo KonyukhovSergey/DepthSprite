@@ -73,10 +73,10 @@ namespace IsoPixel
                 {
                     if (!IsInRect(px + x, py + y)) continue;
 
-                    DepthPixel sourcePixel = source.pixels[Index(x, y)];
+                    DepthPixel sourcePixel = source.pixels[source.Index(x, y)];
                     DepthPixel destinationPixel = pixels[Index(x + px, y + py)];
 
-                    if (sourcePixel.a >= 0 && (pz + sourcePixel.z) <= destinationPixel.z)
+                    if (sourcePixel.a > 0 && (pz + sourcePixel.z) <= destinationPixel.z)
                     {
                         destinationPixel.Set(sourcePixel);
                         destinationPixel.z = (byte)(pz + sourcePixel.z);

@@ -44,7 +44,10 @@
             this.listContainedIn = new IsoPixel.BitmapList();
             this.listContains = new IsoPixel.BitmapList();
             this.listSprites = new IsoPixel.BitmapList();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.tsslMode = new System.Windows.Forms.ToolStripStatusLabel();
             this.cmsSpriteList.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -103,12 +106,14 @@
             this.tsmiLoad.Name = "tsmiLoad";
             this.tsmiLoad.Size = new System.Drawing.Size(151, 22);
             this.tsmiLoad.Text = "Load...";
+            this.tsmiLoad.Click += new System.EventHandler(this.tsmiLoad_Click);
             // 
             // tsmiSave
             // 
             this.tsmiSave.Name = "tsmiSave";
             this.tsmiSave.Size = new System.Drawing.Size(151, 22);
             this.tsmiSave.Text = "Save...";
+            this.tsmiSave.Click += new System.EventHandler(this.tsmiSave_Click);
             // 
             // label2
             // 
@@ -180,12 +185,28 @@
             this.listSprites.OnGetItemTitle += new IsoPixel.BitmapList.OnGetItemTitleEvent(this.listSprites_OnGetItemTitle);
             this.listSprites.OnGetItemBitmap += new IsoPixel.BitmapList.OnGetItemBitmapEvent(this.listSprites_OnGetItemBitmap);
             // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsslMode});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 481);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(734, 22);
+            this.statusStrip1.TabIndex = 9;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // tsslMode
+            // 
+            this.tsslMode.Name = "tsslMode";
+            this.tsslMode.Size = new System.Drawing.Size(0, 17);
+            // 
             // IsoEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(734, 503);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.spriteEditor);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.listContainedIn);
@@ -197,6 +218,8 @@
             this.Name = "IsoEdit";
             this.Text = "IsoEdit";
             this.cmsSpriteList.ResumeLayout(false);
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -219,6 +242,8 @@
         private BitmapList listContainedIn;
         private System.Windows.Forms.Label label3;
         private DepthSpriteEditor spriteEditor;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel tsslMode;
 
 
     }

@@ -18,6 +18,7 @@ namespace IsoPixel
         protected override void OnBufferSetup(Graphics gr)
         {
             gr.InterpolationMode = InterpolationMode.NearestNeighbor;
+            gr.PixelOffsetMode = PixelOffsetMode.Half;
         }
 
         protected override void OnBufferPaint(Graphics gr)
@@ -40,6 +41,11 @@ namespace IsoPixel
             fg = new FastGraphics(sprite.Width, sprite.Height);
 
             Invalidate();
+        }
+
+        public DepthSprite GetSprite()
+        {
+            return sprite;
         }
     }
 }

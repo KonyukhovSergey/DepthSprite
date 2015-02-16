@@ -14,7 +14,7 @@ namespace IsoPixel
         public IList<SpritePosition> sprites = new List<SpritePosition>();
 
         public string name;
-        public string id = new Guid().ToString();
+        public string id = Guid.NewGuid().ToString();
 
         private DepthBitmap cache;
 

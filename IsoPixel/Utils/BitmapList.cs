@@ -80,7 +80,7 @@ namespace IsoPixel
 
                 if (OnGetItemBitmap != null)
                 {
-                    gr.DrawImage(OnGetItemBitmap(i), padding, GetPositionForItem(i));
+                    gr.DrawImage(OnGetItemBitmap(i), padding, GetPositionForItem(i)+ padding);
                 }
 
                 if (OnGetItemTitle != null)
