@@ -13,6 +13,9 @@ namespace IsoPixel
     {
         public IList<SubSprite> subSprites = new List<SubSprite>();
 
+        [ScriptIgnore]
+        public string id { get; private set; }
+
         private DepthBitmap cache;
         private DepthContainer container;
 
@@ -34,17 +37,18 @@ namespace IsoPixel
 
         public DepthSprite() { }
 
-        public DepthSprite(int width, int height, DepthContainer container)
+        public DepthSprite(int width, int height, string id, DepthContainer container)
             : base(width, height)
         {
             this.container = container;
+            this.id = id;
             Clear(0, 0, 0, 0, 0);
         }
 
 
         public bool CanAddToSprite(string id)
         {
-            if (container[id] == this)
+            if (id.Equals(this.id))
             {
                 return false;
             }
@@ -60,10 +64,11 @@ namespace IsoPixel
             return true;
         }
 
-        public DepthSprite(Image image, DepthContainer container)
+        public DepthSprite(Image image, string id, DepthContainer container)
             : base(image)
         {
             this.container = container;
+            this.id = id;
         }
 
         private void Update()
@@ -73,10 +78,10 @@ namespace IsoPixel
                 cache = new DepthBitmap(Width, Height);
                 cache.Draw(this, 0, 0, 0);
 
-                foreach (var item in subSprites)
+                foreach (var subSprite in subSprites)
                 {
-                    container[item.id].Update();
-                    cache.Draw(container[item.id].cache, item.x, item.y, item.z);
+                    container[subSprite.id].Update();
+                    cache.Draw(container[subSprite.id].cache, subSprite.x, subSprite.y, subSprite.z);
                 }
             }
         }
@@ -91,9 +96,10 @@ namespace IsoPixel
             }
         }
 
-        public void SetContainer(DepthContainer container)
+        public void SetContainerAndId(DepthContainer container, string id)
         {
             this.container = container;
+            this.id = id;
         }
 
     }

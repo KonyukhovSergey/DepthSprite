@@ -18,6 +18,7 @@ namespace IsoPixel
             : base(width, height)
         {
             zvalues = new byte[width * height];
+            ClearZ(0);
         }
 
         public DepthBitmap(Image image)
@@ -46,11 +47,7 @@ namespace IsoPixel
         public void Clear(int r, int g, int b, int a, int z)
         {
             Graphics.Clear(Color.FromArgb(a, r, g, b));
-
-            for (int i = 0; i < zvalues.Length; i++)
-            {
-                zvalues[i] = (byte)(z + zoffset);
-            }
+            ClearZ(z);
         }
 
         public void ClearZ(int z)
@@ -69,10 +66,10 @@ namespace IsoPixel
                 {
                     if (!IsInRect(px + x, py + y)) continue;
 
-                    if (source.GetColor(x, y).A > 0 && (pz + source.GetZ(x, y)) <= GetZ(x + px, y + pz))
+                    if (source.GetColor(x, y).A > 0 && (pz + source.GetZ(x, y)) <= GetZ(x + px, y + py))
                     {
                         SetPixel(x + px, y + py, source.GetPixel(x, y));
-                        SetZ(x + px, y + py, source.GetZ(x, y));
+                        SetZ(x + px, y + py, pz + source.GetZ(x, y));
                     }
                 }
             }

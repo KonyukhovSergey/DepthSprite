@@ -19,7 +19,7 @@ namespace IsoPixel
 
             foreach (var sprite in list)
             {
-                sprite.Value.SetContainer(container);
+                sprite.Value.SetContainerAndId(container, sprite.Key);
             }
             return container;
         }
@@ -49,6 +49,11 @@ namespace IsoPixel
             }
 
             return true;
+        }
+
+        public void Add(DepthSprite sprite)
+        {
+            this[sprite.id] = sprite;
         }
     }
 }

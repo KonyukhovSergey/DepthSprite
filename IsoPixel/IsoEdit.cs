@@ -57,7 +57,7 @@ namespace IsoPixel
                     string key = Path.GetFileNameWithoutExtension(fileName);
                     if (!container.ContainsKey(key))
                     {
-                        container[key] = new DepthSprite(Image.FromFile(fileName), container);
+                        container.Add(new DepthSprite(Image.FromFile(fileName), key, container));
                         listSprites.AddId(key);
                     }
                 }
@@ -135,9 +135,16 @@ namespace IsoPixel
                     break;
 
                 case EditorModes.ADD_SPRITE_TO_SPRITE:
-                    spriteEditor.Sprite.subSprites.Add(new SubSprite(id, 0, 0, 0));
-                    spriteEditor.Sprite.ClearCache();
-                    UpdateUI();
+                    if (container.CanAddSpriteToSprite(id, spriteEditor.Sprite.id))
+                    {
+                        spriteEditor.Sprite.subSprites.Add(new SubSprite(id, 0, 0, -1));
+                        spriteEditor.Sprite.ClearCache();
+                        UpdateUI();
+                    }
+                    else
+                    {
+                        MessageBox.Show("cycle reference");
+                    }
                     break;
             }
         }

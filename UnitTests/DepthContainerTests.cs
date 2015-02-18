@@ -8,22 +8,19 @@ namespace UnitTests
     public class DepthContainerTests
     {
         private DepthContainer dc;
-            
+
         [TestInitialize]
         public void SetUp()
         {
             dc = new DepthContainer();
 
-            //dc.Add(new DepthSprite(4, 4) { id = "id01" });
-            //dc.Add(new DepthSprite(16, 16) { id = "id02" });
-            //dc.Add(new DepthSprite(8, 8) { id = "id03" });
-            dc["id01"] = new DepthSprite(4, 4, dc);
-            dc["id02"] = new DepthSprite(16, 16, dc);
-            dc["id03"] = new DepthSprite(8, 8, dc);
+            dc.Add(new DepthSprite(4, 4, "id01", dc));
+            dc.Add(new DepthSprite(16, 16, "id02", dc));
+            dc.Add(new DepthSprite(8, 8, "id03", dc));
             dc["id03"].subSprites.Add(new SubSprite("id01", 10, 10, 10));
             dc["id03"].subSprites.Add(new SubSprite("id02", 20, 10, 10));
-            dc["id04"] = new DepthSprite(1, 1, dc);
-            dc["id05"] = new DepthSprite(1, 1, dc);
+            dc.Add(new DepthSprite(1, 1, "id04", dc));
+            dc.Add(new DepthSprite(1, 1, "id05", dc));
             dc["id05"].subSprites.Add(new SubSprite("id04", 0, 0, 0));
             dc["id04"].subSprites.Add(new SubSprite("id01", 0, 0, 0));
             dc["id04"].subSprites.Add(new SubSprite("id03", 1, 1, 1));
@@ -40,10 +37,10 @@ namespace UnitTests
         [TestMethod]
         public void TestCanAddSpriteToSprite()
         {
-            Assert.IsTrue(dc.CanAddSpriteToSprite("id01","id02"));
-            Assert.IsFalse(dc.CanAddSpriteToSprite("id01","id01"));
-            Assert.IsTrue(dc.CanAddSpriteToSprite("id01","id03"));
-            Assert.IsFalse(dc.CanAddSpriteToSprite("id03","id01"));
+            Assert.IsTrue(dc.CanAddSpriteToSprite("id01", "id02"));
+            Assert.IsFalse(dc.CanAddSpriteToSprite("id01", "id01"));
+            Assert.IsTrue(dc.CanAddSpriteToSprite("id01", "id03"));
+            Assert.IsFalse(dc.CanAddSpriteToSprite("id03", "id01"));
             Assert.IsFalse(dc.CanAddSpriteToSprite("id04", "id01"));
             Assert.IsFalse(dc.CanAddSpriteToSprite("id04", "id02"));
             Assert.IsFalse(dc.CanAddSpriteToSprite("id04", "id03"));
