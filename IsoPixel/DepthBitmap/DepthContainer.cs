@@ -7,7 +7,7 @@ using System.Web.Script.Serialization;
 
 namespace IsoPixel
 {
-    public class DepthContainer : Dictionary<string,DepthSprite>
+    public class DepthContainer : Dictionary<string, DepthSprite>
     {
         public static DepthContainer Parse(string json)
         {
@@ -17,7 +17,7 @@ namespace IsoPixel
 
             var container = new DepthContainer(list);
 
-            foreach(var sprite in list)
+            foreach (var sprite in list)
             {
                 sprite.Value.SetContainer(container);
             }
@@ -31,6 +31,24 @@ namespace IsoPixel
         public string ToJsonSring()
         {
             return JsonStringFormatter.FormatOutput(new JavaScriptSerializer().Serialize(this));
+        }
+
+        public bool CanAddSpriteToSprite(string addId, string recvId)
+        {
+            if (addId.Equals(recvId))
+            {
+                return false;
+            }
+
+            foreach (var subSprite in this[addId].subSprites)
+            {
+                if (!CanAddSpriteToSprite(subSprite.id, recvId))
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }

@@ -32,42 +32,6 @@ namespace IsoPixel
             }
         }
 
-        public bool CanAddToSprite(string id)
-        {
-            if (container[id] == this)
-            {
-                return false;
-            }
-
-            foreach (var subSprite in container[id].subSprites)
-            {
-                if (!container[subSprite.id].CanAddSubSprite(id))
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        private bool CanAddSubSprite(string id)
-        {
-            if (container[id] == this)
-            {
-                return false;
-            }
-
-            foreach (var subSprite in container[id].subSprites)
-            {
-                if (!container[subSprite.id].CanAddSubSprite(id))
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
         public DepthSprite() { }
 
         public DepthSprite(int width, int height, DepthContainer container)
@@ -75,6 +39,25 @@ namespace IsoPixel
         {
             this.container = container;
             Clear(0, 0, 0, 0, 0);
+        }
+
+
+        public bool CanAddToSprite(string id)
+        {
+            if (container[id] == this)
+            {
+                return false;
+            }
+
+            foreach (var subSprite in subSprites)
+            {
+                if (!container[subSprite.id].CanAddToSprite(id))
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         public DepthSprite(Image image, DepthContainer container)
