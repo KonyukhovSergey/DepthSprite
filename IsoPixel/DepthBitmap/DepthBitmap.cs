@@ -1,105 +1,86 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace IsoPixel
 {
-    public class DepthBitmap : BitmapSize
+    public class DepthBitmap : FastGraphics
     {
-        private static DepthPixel VoidPixel = new DepthPixel() { a = 0, z = 0 };
+        private static int zoffset = 100;
+        private byte[] zvalues = new byte[0];
 
-        protected DepthPixel[] pixels;
-
-        public DepthBitmap()
-        {
-            InitPixelsArray(0, 0);
-        }
+        public DepthBitmap() { }
 
         public DepthBitmap(int width, int height)
+            : base(width, height)
         {
-            InitPixelsArray(width, height);
+            zvalues = new byte[width * height];
         }
 
-        public string DataBase64
+        public DepthBitmap(Image image)
+            : base(image)
         {
-            get
+            zvalues = new byte[Width * Height];
+            ClearZ(0);
+        }
+
+        public string base64_z_values
+        {
+            get { return Convert.ToBase64String(RLE.Encode(zvalues)); }
+            set { zvalues = RLE.Decode(Convert.FromBase64String(value)); }
+        }
+
+        public int GetZ(int x, int y)
+        {
+            return (int)zvalues[x + y * Width] - zoffset;
+        }
+
+        public void SetZ(int x, int y, int z)
+        {
+            zvalues[x + y * Width] = (byte)(z + zoffset);
+        }
+
+        public void Clear(int r, int g, int b, int a, int z)
+        {
+            Graphics.Clear(Color.FromArgb(a, r, g, b));
+
+            for (int i = 0; i < zvalues.Length; i++)
             {
-                byte[] data = new byte[1 + 1 + pixels.Length * 5];
-
-                data[0] = (byte)width;
-                data[1] = (byte)height;
-
-                int position = 2;
-
-                for (int i = 0; i < pixels.Length; i++)
-                {
-                    position = pixels[i].WriteTo(data, position);
-                }
-
-                if (position != data.Length)
-                {
-                    throw new IndexOutOfRangeException();
-                }
-
-                return data != null ? Convert.ToBase64String(data) : null;
+                zvalues[i] = (byte)(z + zoffset);
             }
-            set
+        }
+
+        public void ClearZ(int z)
+        {
+            for (int i = 0; i < zvalues.Length; i++)
             {
-                byte[] data = Convert.FromBase64String(value);
-
-                InitPixelsArray(data[0], data[1]);
-
-                int position = 2;
-
-                for (int i = 0; i < pixels.Length; i++)
-                {
-                    position = pixels[i].ReadFrom(data, position);
-                }
-
-                if (position != data.Length)
-                {
-                    throw new IndexOutOfRangeException();
-                }
+                zvalues[i] = (byte)(z + zoffset);
             }
         }
 
         public void Draw(DepthBitmap source, int px, int py, int pz)
         {
-            for (int y = 0; y < source.height; y++)
+            for (int y = 0; y < source.Height; y++)
             {
-                for (int x = 0; x < source.width; x++)
+                for (int x = 0; x < source.Width; x++)
                 {
                     if (!IsInRect(px + x, py + y)) continue;
 
-                    DepthPixel sourcePixel = source.pixels[source.Index(x, y)];
-                    DepthPixel destinationPixel = pixels[Index(x + px, y + py)];
-
-                    if (sourcePixel.a > 0 && (pz + sourcePixel.z) <= destinationPixel.z)
+                    if (source.GetColor(x, y).A > 0 && (pz + source.GetZ(x, y)) <= GetZ(x + px, y + pz))
                     {
-                        destinationPixel.Set(sourcePixel);
-                        destinationPixel.z = (byte)(pz + sourcePixel.z);
+                        SetPixel(x + px, y + py, source.GetPixel(x, y));
+                        SetZ(x + px, y + py, source.GetZ(x, y));
                     }
                 }
             }
         }
 
-        public DepthPixel PixelAt(int x, int y)
+        public bool IsInRect(int x, int y)
         {
-            return IsInRect(x, y) ? pixels[Index(x, y)] : VoidPixel;
-        }
-
-        private void InitPixelsArray(int width, int height)
-        {
-            this.width = width;
-            this.height = height;
-            pixels = new DepthPixel[width * height];
-
-            for (int i = 0; i < pixels.Length; i++)
-            {
-                pixels[i] = new DepthPixel();
-            }
+            return x >= 0 && y >= 0 && x < Width && y < Height;
         }
     }
 }

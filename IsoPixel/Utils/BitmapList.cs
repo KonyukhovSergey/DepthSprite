@@ -10,13 +10,15 @@ namespace IsoPixel
 {
     public class BitmapList : BufferedGraphicsControl
     {
-        private int count = 0;
+        private IList<string> ids = new List<string>();
+        private int count { get { return ids.Count; } }
 
         private int top = 0;
         private int size = 64;
         private int tile = 16;
         private int padding = 8;
-        private int selectedIndex = 3;
+
+        private int selectedIndex = -1;
         private int hoveredIndex = -1;
 
         private bool isControlHovered = false;
@@ -78,15 +80,12 @@ namespace IsoPixel
 
                 gr.FillRectangle(Brushes.White, padding, GetPositionForItem(i) + padding, size, size);
 
-                if (OnGetItemBitmap != null)
+                if (OnGetItemImage != null)
                 {
-                    gr.DrawImage(OnGetItemBitmap(i), padding, GetPositionForItem(i)+ padding);
+                    gr.DrawImage(OnGetItemImage(ids[i]), padding, GetPositionForItem(i) + padding);
                 }
 
-                if (OnGetItemTitle != null)
-                {
-                    gr.DrawString(OnGetItemTitle(i), Font, Brushes.Black, padding, GetPositionForItem(i) + size + padding);
-                }
+                gr.DrawString(ids[i], Font, Brushes.Black, padding, GetPositionForItem(i) + size + padding);
             }
         }
 
@@ -114,7 +113,7 @@ namespace IsoPixel
 
                 if (OnSelectItem != null && selectedIndex >= 0 && selectedIndex < count)
                 {
-                    OnSelectItem(selectedIndex);
+                    OnSelectItem(ids[selectedIndex]);
                 }
             }
             base.OnMouseClick(e);
@@ -173,49 +172,27 @@ namespace IsoPixel
         public event OnSelectItemEvent OnSelectItem;
 
         [Category("BitmapListView")]
-        public event OnGetItemTitleEvent OnGetItemTitle;
+        public event OnGetItemImageEvent OnGetItemImage;
 
-        [Category("BitmapListView")]
-        public event OnGetItemBitmapEvent OnGetItemBitmap;
-
-        [Category("BitmapListView")]
-        public int SelectionIndex
+        public void AddId(string id)
         {
-            get
-            {
-                return selectedIndex;
-            }
-            set
-            {
-                if (selectedIndex != value)
-                {
-                    selectedIndex = value;
-                    Invalidate();
-                }
-            }
+            ids.Add(id);
+            Invalidate();
         }
 
-        [Category("BitmapListView")]
-        public int ItemsCount
+        public void RemoveId(string id)
         {
-            get
-            {
-                return count;
-            }
-            set
-            {
-                if (value != count)
-                {
-                    count = value;
-                    Invalidate();
-                }
-            }
+            ids.Remove(id);
+            Invalidate();
         }
 
-        public delegate void OnSelectItemEvent(int index);
-        public delegate string OnGetItemTitleEvent(int index);
-        public delegate Bitmap OnGetItemBitmapEvent(int index);
+        public void RemoveAll()
+        {
+            ids.Clear();
+            Invalidate();
+        }
+
+        public delegate void OnSelectItemEvent(string id);
+        public delegate Image OnGetItemImageEvent(string id);
     }
-
-
 }

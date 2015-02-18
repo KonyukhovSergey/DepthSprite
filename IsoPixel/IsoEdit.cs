@@ -13,14 +13,14 @@ namespace IsoPixel
 {
     public partial class IsoEdit : Form, IMessageFilter
     {
-        private DepthContainer sprites = new DepthContainer();
+        private DepthContainer container = new DepthContainer();
         private EditorModes mode = EditorModes.DEFAULT;
 
         public IsoEdit()
         {
             InitializeComponent();
             Application.AddMessageFilter(this);
-            Update();
+            UpdateUI();
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -35,7 +35,7 @@ namespace IsoPixel
             {
                 case Keys.A:
                     mode = EditorModes.ADD_SPRITE_TO_SPRITE;
-                    Update();
+                    UpdateUI();
                     break;
             }
             return true;
@@ -54,46 +54,22 @@ namespace IsoPixel
             {
                 foreach (var fileName in fileDialog.FileNames)
                 {
-                    sprites.Add(new DepthSprite(Image.FromFile(fileName)) { name = Path.GetFileNameWithoutExtension(fileName) });
+                    string key = Path.GetFileNameWithoutExtension(fileName);
+                    if (!container.ContainsKey(key))
+                    {
+                        container[key] = new DepthSprite(Image.FromFile(fileName), container);
+                        listSprites.AddId(key);
+                    }
                 }
-                Update();
+                UpdateUI();
             }
         }
 
-        private void Update()
+        private void UpdateUI()
         {
-            listSprites.ItemsCount = sprites.Count;
+            listSprites.Invalidate();
+            spriteEditor.Invalidate();
             tsslMode.Text = mode.ToString();
-        }
-
-        private Bitmap listSprites_OnGetItemBitmap(int index)
-        {
-            var item = sprites[index];
-            FastGraphics fastGraphics = new FastGraphics(item.Width, item.Height);
-
-            item.DrawTo(fastGraphics, sprites);
-            return fastGraphics.Bitmap;
-        }
-
-        private string listSprites_OnGetItemTitle(int index)
-        {
-            return sprites[index].name;
-        }
-
-        private void listSprites_OnSelectItem(int index)
-        {
-            switch (mode)
-            {
-                case EditorModes.DEFAULT:
-                    spriteEditor.SetSprite(sprites[index], sprites);
-                    break;
-
-                case EditorModes.ADD_SPRITE_TO_SPRITE:
-                    spriteEditor.GetSprite().sprites.Add(new SpritePosition() { id = sprites[index].id });
-                    sprites.ClearCacheFor(spriteEditor.GetSprite().id);
-                    Update();
-                    break;
-            }
         }
 
         private void tsmiSave_Click(object sender, EventArgs e)
@@ -107,7 +83,7 @@ namespace IsoPixel
 
             if (fileDialog.ShowDialog() == DialogResult.OK)
             {
-                File.WriteAllText(fileDialog.FileName, sprites.ToJsonSring(), Encoding.UTF8);
+                File.WriteAllText(fileDialog.FileName, container.ToJsonSring(), Encoding.UTF8);
             }
         }
 
@@ -122,8 +98,16 @@ namespace IsoPixel
 
             if (fileDialog.ShowDialog() == DialogResult.OK)
             {
-                sprites = DepthContainer.Parse(File.ReadAllText(fileDialog.FileName, Encoding.UTF8));
-                Update();
+                container = DepthContainer.Parse(File.ReadAllText(fileDialog.FileName, Encoding.UTF8));
+
+                listSprites.RemoveAll();
+
+                foreach(var item in container.Keys)
+                {
+                    listSprites.AddId(item);
+                }
+
+                UpdateUI();
             }
         }
 
@@ -132,7 +116,7 @@ namespace IsoPixel
             if (m.Msg == WM_KEYUP)
             {
                 mode = EditorModes.DEFAULT;
-                Update();
+                UpdateUI();
             }
             return false;
         }
@@ -142,7 +126,26 @@ namespace IsoPixel
         const int WM_KEYUP = 0x101;
         const int WM_SYSKEYUP = 0x105;
 
+        private void listSprites_OnSelectItem(string id)
+        {
+            switch (mode)
+            {
+                case EditorModes.DEFAULT:
+                    spriteEditor.Sprite = container[id];
+                    break;
 
+                case EditorModes.ADD_SPRITE_TO_SPRITE:
+                    spriteEditor.Sprite.subSprites.Add(new SubSprite(id, 0, 0, 0));
+                    spriteEditor.Sprite.ClearCache();
+                    UpdateUI();
+                    break;
+            }
+        }
+
+        private Image listSprites_OnGetItemImage(string id)
+        {
+            return container[id].Bitmap;
+        }
     }
     public enum EditorModes
     {

@@ -50,6 +50,7 @@
     <Compile Include="DepthSpriteEditor.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="RLE.cs" />
     <Compile Include="Utils\FastGraphics.cs" />
     <Compile Include="Utils\BitmapList.cs">
       <SubType>Component</SubType>
@@ -67,11 +68,10 @@
       <DependentUpon>IsoEdit.cs</DependentUpon>
     </Compile>
     <Compile Include="DepthBitmap\DepthContainer.cs" />
-    <Compile Include="DepthBitmap\DepthPixel.cs" />
     <Compile Include="Utils\JsonStringFormatter.cs" />
     <Compile Include="DepthBitmap\DepthBitmap.cs" />
     <Compile Include="DepthBitmap\DepthSprite.cs" />
-    <Compile Include="DepthBitmap\SpritePosition.cs" />
+    <Compile Include="DepthBitmap\SubSprite.cs" />
     <Compile Include="Utils\PixelPosition.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

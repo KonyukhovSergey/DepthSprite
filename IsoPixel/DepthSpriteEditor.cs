@@ -11,9 +11,12 @@ namespace IsoPixel
     public class DepthSpriteEditor : BufferedGraphicsControl
     {
         private DepthSprite sprite;
-        private DepthContainer sprites;
 
-        private FastGraphics fg;
+        public DepthSprite Sprite
+        {
+            get { return sprite; }
+            set { sprite = value; Invalidate(); }
+        }
 
         protected override void OnBufferSetup(Graphics gr)
         {
@@ -27,25 +30,9 @@ namespace IsoPixel
 
             if (sprite != null)
             {
-                sprite.DrawTo(fg, sprites);
-                gr.FillRectangle(Brushes.SlateGray, 0, 0, fg.Width * 8, fg.Height * 8);
-                gr.DrawImage(fg.Bitmap, 0, 0, fg.Width * 8, fg.Height * 8);
+                gr.FillRectangle(Brushes.SlateGray, 0, 0, sprite.Width * 8, sprite.Height * 8);
+                gr.DrawImage(sprite.Bitmap, 0, 0, sprite.Width * 8, sprite.Height * 8);
             }
-        }
-
-        public void SetSprite(DepthSprite sprite, DepthContainer sprites)
-        {
-            this.sprite = sprite;
-            this.sprites = sprites;
-
-            fg = new FastGraphics(sprite.Width, sprite.Height);
-
-            Invalidate();
-        }
-
-        public DepthSprite GetSprite()
-        {
-            return sprite;
         }
     }
 }

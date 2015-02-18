@@ -10,10 +10,6 @@ namespace IsoPixel
     {
         protected int width, height;
 
-        public bool IsInRect(int x, int y)
-        {
-            return x >= 0 && y >= 0 && x < width && y < height;
-        }
 
         protected int Index(int x, int y)
         {

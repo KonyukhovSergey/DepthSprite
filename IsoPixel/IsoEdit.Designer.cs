@@ -40,12 +40,12 @@
             this.tsmiSave = new System.Windows.Forms.ToolStripMenuItem();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.tsslMode = new System.Windows.Forms.ToolStripStatusLabel();
             this.spriteEditor = new IsoPixel.DepthSpriteEditor();
             this.listContainedIn = new IsoPixel.BitmapList();
             this.listContains = new IsoPixel.BitmapList();
             this.listSprites = new IsoPixel.BitmapList();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.tsslMode = new System.Windows.Forms.ToolStripStatusLabel();
             this.cmsSpriteList.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -135,6 +135,21 @@
             this.label3.TabIndex = 7;
             this.label3.Text = "Contains:";
             // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsslMode});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 481);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(734, 22);
+            this.statusStrip1.TabIndex = 9;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // tsslMode
+            // 
+            this.tsslMode.Name = "tsslMode";
+            this.tsslMode.Size = new System.Drawing.Size(0, 17);
+            // 
             // spriteEditor
             // 
             this.spriteEditor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -150,10 +165,8 @@
             // 
             this.listContainedIn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.listContainedIn.ItemsCount = 0;
             this.listContainedIn.Location = new System.Drawing.Point(642, 25);
             this.listContainedIn.Name = "listContainedIn";
-            this.listContainedIn.SelectionIndex = 3;
             this.listContainedIn.Size = new System.Drawing.Size(80, 466);
             this.listContainedIn.TabIndex = 6;
             this.listContainedIn.Text = "bitmapList2";
@@ -162,43 +175,22 @@
             // 
             this.listContains.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.listContains.ItemsCount = 0;
             this.listContains.Location = new System.Drawing.Point(556, 25);
             this.listContains.Name = "listContains";
-            this.listContains.SelectionIndex = 3;
             this.listContains.Size = new System.Drawing.Size(80, 466);
             this.listContains.TabIndex = 4;
-            this.listContains.Text = "bitmapList1";
             // 
             // listSprites
             // 
             this.listSprites.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.listSprites.ContextMenuStrip = this.cmsSpriteList;
-            this.listSprites.ItemsCount = 0;
             this.listSprites.Location = new System.Drawing.Point(12, 25);
             this.listSprites.Name = "listSprites";
-            this.listSprites.SelectionIndex = -1;
             this.listSprites.Size = new System.Drawing.Size(80, 466);
             this.listSprites.TabIndex = 3;
             this.listSprites.OnSelectItem += new IsoPixel.BitmapList.OnSelectItemEvent(this.listSprites_OnSelectItem);
-            this.listSprites.OnGetItemTitle += new IsoPixel.BitmapList.OnGetItemTitleEvent(this.listSprites_OnGetItemTitle);
-            this.listSprites.OnGetItemBitmap += new IsoPixel.BitmapList.OnGetItemBitmapEvent(this.listSprites_OnGetItemBitmap);
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsslMode});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 481);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(734, 22);
-            this.statusStrip1.TabIndex = 9;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // tsslMode
-            // 
-            this.tsslMode.Name = "tsslMode";
-            this.tsslMode.Size = new System.Drawing.Size(0, 17);
+            this.listSprites.OnGetItemImage += new IsoPixel.BitmapList.OnGetItemImageEvent(this.listSprites_OnGetItemImage);
             // 
             // IsoEdit
             // 

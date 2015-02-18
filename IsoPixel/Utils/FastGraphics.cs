@@ -1,6 +1,9 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Runtime.InteropServices;
+using System.Web.Script.Serialization;
 
 namespace IsoPixel
 {
@@ -14,6 +17,8 @@ namespace IsoPixel
         private int[] data;
         private int stride;
 
+        public FastGraphics() { }
+
         public FastGraphics(int width, int height)
         {
             bmp = new Bitmap(width, height);
@@ -26,10 +31,37 @@ namespace IsoPixel
             Graphics.DrawImage(source, 0, 0);
         }
 
+        public string base64_image_data
+        {
+            get
+            {
+                MemoryStream ms = new MemoryStream();
+                Bitmap.Save(ms, ImageFormat.Png);
+                return Convert.ToBase64String(ms.ToArray());
+            }
+            set
+            {
+                if (gr != null)
+                {
+                    gr.Dispose();
+                    bmp.Dispose();
+                }
+
+                Image img = Image.FromStream(new MemoryStream(Convert.FromBase64String(value)));
+
+                bmp = new Bitmap(img.Width, img.Height);
+                gr = Graphics.FromImage(bmp);
+                Graphics.DrawImage(img, 0, 0);
+            }
+        }
+
+        [ScriptIgnore]
         public Graphics Graphics { get { Unlock(); return gr; } }
 
-        public Bitmap Bitmap { get { Unlock(); return bmp; } }
+        [ScriptIgnore]
+        public virtual Bitmap Bitmap { get { Unlock(); return bmp; } }
 
+        [ScriptIgnore]
         public int[] Data { get { Lock(); return data; } }
 
         public int Width { get { return bmp.Width; } }

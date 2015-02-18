@@ -11,85 +11,107 @@ namespace IsoPixel
 {
     public class DepthSprite : DepthBitmap
     {
-        public IList<SpritePosition> sprites = new List<SpritePosition>();
-
-        public string name;
-        public string id = Guid.NewGuid().ToString();
+        public IList<SubSprite> subSprites = new List<SubSprite>();
 
         private DepthBitmap cache;
+        private DepthContainer container;
 
         public void ClearCache()
         {
             cache = null;
+
+            foreach (var kvp in container)
+            {
+                foreach (var subSprite in kvp.Value.subSprites)
+                {
+                    if (subSprite.id.Equals(kvp.Key))
+                    {
+                        container[subSprite.id].ClearCache();
+                    }
+                }
+            }
         }
 
-        public DepthSprite()  { }
+        public bool CanAddToSprite(string id)
+        {
+            if (container[id] == this)
+            {
+                return false;
+            }
 
-        public DepthSprite(int width, int height)
+            foreach (var subSprite in container[id].subSprites)
+            {
+                if (!container[subSprite.id].CanAddSubSprite(id))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private bool CanAddSubSprite(string id)
+        {
+            if (container[id] == this)
+            {
+                return false;
+            }
+
+            foreach (var subSprite in container[id].subSprites)
+            {
+                if (!container[subSprite.id].CanAddSubSprite(id))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        public DepthSprite() { }
+
+        public DepthSprite(int width, int height, DepthContainer container)
             : base(width, height)
         {
+            this.container = container;
             Clear(0, 0, 0, 0, 0);
         }
 
-        public DepthSprite(Image image)
-            : this(image.Width, image.Height)
+        public DepthSprite(Image image, DepthContainer container)
+            : base(image)
         {
-            From(new FastGraphics(image));
+            this.container = container;
         }
 
-        private void update(DepthContainer container)
+        private void Update()
         {
             if (cache == null)
             {
-                cache = new DepthBitmap(width, height);
+                cache = new DepthBitmap(Width, Height);
                 cache.Draw(this, 0, 0, 0);
 
-                foreach (var item in sprites)
+                foreach (var item in subSprites)
                 {
-                    container[item.id].update(container);
+                    container[item.id].Update();
                     cache.Draw(container[item.id].cache, item.x, item.y, item.z);
                 }
             }
         }
 
-        public void Clear(int r, int g, int b, int a, int z)
+        [ScriptIgnore]
+        public override Bitmap Bitmap
         {
-            for (int i = 0; i < pixels.Length; i++)
+            get
             {
-                pixels[i].Set(r, g, b, a, z);
+                Update();
+                return base.Bitmap;
             }
         }
 
-        public void Clear(DepthPixel p)
+        public void SetContainer(DepthContainer container)
         {
-            Clear(p.r, p.g, p.b, p.a, p.z);
+            this.container = container;
         }
 
-        public void DrawTo(FastGraphics fg, DepthContainer container)
-        {
-            update(container);
-
-            for (int y = 0; y < height; y++)
-            {
-                for (int x = 0; x < width; x++)
-                {
-                    fg.SetPixel(x, y, cache.PixelAt(x, y).GetColor().ToArgb());
-                }
-            }
-        }
-
-        public void From(FastGraphics bitmap)
-        {
-            Clear(0, 0, 0, 0, 0);
-
-            for (int y = 0; y < height; y++)
-            {
-                for (int x = 0; x < width; x++)
-                {
-                    Color c = bitmap.GetColor(x, y);
-                    PixelAt(x, y).Set(c.R, c.G, c.B, c.A, 0);
-                }
-            }
-        }
     }
 }

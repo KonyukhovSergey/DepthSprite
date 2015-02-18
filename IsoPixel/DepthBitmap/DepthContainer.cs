@@ -7,48 +7,30 @@ using System.Web.Script.Serialization;
 
 namespace IsoPixel
 {
-    public class DepthContainer : List<DepthSprite>
+    public class DepthContainer : Dictionary<string,DepthSprite>
     {
         public static DepthContainer Parse(string json)
         {
             var ser = new JavaScriptSerializer();
             ser.MaxJsonLength = Int32.MaxValue;
-            var dictionary = ser.Deserialize<List<DepthSprite>>(json);
-            return new DepthContainer(dictionary);
+            var list = ser.Deserialize<Dictionary<string, DepthSprite>>(json);
 
+            var container = new DepthContainer(list);
+
+            foreach(var sprite in list)
+            {
+                sprite.Value.SetContainer(container);
+            }
+            return container;
         }
 
         public DepthContainer() : base() { }
 
-        public DepthContainer(List<DepthSprite> dictionary) : base(dictionary) { }
+        public DepthContainer(Dictionary<string, DepthSprite> list) : base(list) { }
 
         public string ToJsonSring()
         {
             return JsonStringFormatter.FormatOutput(new JavaScriptSerializer().Serialize(this));
-        }
-
-        public DepthSprite this[string id]
-        {
-            get
-            {
-                return this.FirstOrDefault(e => e.id == id); ;
-            }
-        }
-
-        public void ClearCacheFor(string id)
-        {
-            this[id].ClearCache();
-
-            foreach (var sprite in this)
-            {
-                foreach (var spritePosition in sprite.sprites)
-                {
-                    if (spritePosition.id.Equals(id))
-                    {
-                        ClearCacheFor(sprite.id);
-                    }
-                }
-            }
         }
     }
 }
