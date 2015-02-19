@@ -51,6 +51,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="RLE.cs" />
+    <Compile Include="Utils\DragHelper.cs" />
     <Compile Include="Utils\FastGraphics.cs" />
     <Compile Include="Utils\BitmapList.cs">
       <SubType>Component</SubType>

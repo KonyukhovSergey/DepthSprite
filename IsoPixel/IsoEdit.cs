@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace IsoPixel
 {
-    public partial class IsoEdit : Form, IMessageFilter
+    public partial class IsoEdit : Form
     {
         private DepthContainer container = new DepthContainer();
         private EditorModes mode = EditorModes.DEFAULT;
@@ -19,25 +19,25 @@ namespace IsoPixel
         public IsoEdit()
         {
             InitializeComponent();
-            Application.AddMessageFilter(this);
             UpdateUI();
-        }
-
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            Application.RemoveMessageFilter(this);
-            base.OnClosing(e);
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             switch (keyData)
             {
+                case Keys.Escape:
+                    mode = EditorModes.DEFAULT;
+                    SetInfo("");
+                    break;
                 case Keys.A:
                     mode = EditorModes.ADD_SPRITE_TO_SPRITE;
-                    UpdateUI();
+                    SetInfo("pick sprite for add to current sprite...");
                     break;
             }
+
+            UpdateUI();
+
             return true;
         }
 
@@ -102,7 +102,7 @@ namespace IsoPixel
 
                 listSprites.RemoveAll();
 
-                foreach(var item in container.Keys)
+                foreach (var item in container.Keys)
                 {
                     listSprites.AddId(item);
                 }
@@ -111,27 +111,27 @@ namespace IsoPixel
             }
         }
 
-        public bool PreFilterMessage(ref Message m)
-        {
-            if (m.Msg == WM_KEYUP)
-            {
-                mode = EditorModes.DEFAULT;
-                UpdateUI();
-            }
-            return false;
-        }
-
-        const int WM_KEYDOWN = 0x100;
-        const int WM_SYSKEYDOWN = 0x104;
-        const int WM_KEYUP = 0x101;
-        const int WM_SYSKEYUP = 0x105;
-
         private void listSprites_OnSelectItem(string id)
         {
             switch (mode)
             {
                 case EditorModes.DEFAULT:
-                    spriteEditor.Sprite = container[id];
+                    {
+                        spriteEditor.Sprite = container[id];
+                        listContains.RemoveAll();
+                        foreach (var ss in spriteEditor.Sprite.subSprites)
+                        {
+                            listContains.AddId(ss.id);
+                        }
+                        listContainedIn.RemoveAll();
+                        foreach(var ds in container.Values)
+                        {
+                            if (ds.subSprites.Count(e => e.id == id)>0)
+                            {
+                                listContainedIn.AddId(ds.id);
+                            }
+                        }
+                    }
                     break;
 
                 case EditorModes.ADD_SPRITE_TO_SPRITE:
@@ -139,12 +139,15 @@ namespace IsoPixel
                     {
                         spriteEditor.Sprite.subSprites.Add(new SubSprite(id, 0, 0, 1));
                         spriteEditor.Sprite.ClearCache();
+                        SetInfo("sprite added");
+                        mode = EditorModes.DEFAULT;
                         UpdateUI();
                     }
                     else
                     {
-                        MessageBox.Show("cycle reference");
+                        SetError("cycle references");
                     }
+                    listContains.SelectedId = spriteEditor.Sprite.id;
                     break;
             }
         }
@@ -152,6 +155,18 @@ namespace IsoPixel
         private Image listSprites_OnGetItemImage(string id)
         {
             return container[id].Bitmap;
+        }
+
+        private void SetError(string message)
+        {
+            tsslInfo.ForeColor = Color.Red;
+            tsslInfo.Text = message;
+        }
+
+        private void SetInfo(string message)
+        {
+            tsslInfo.ForeColor = Color.DarkMagenta;
+            tsslInfo.Text = message;
         }
     }
     public enum EditorModes

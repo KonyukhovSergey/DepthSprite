@@ -17,7 +17,9 @@ namespace IsoPixel
         public string id { get; private set; }
 
         private DepthBitmap cache;
-        private DepthContainer container;
+
+        [ScriptIgnore]
+        public DepthContainer container { get; private set; }
 
         public void ClearCache()
         {

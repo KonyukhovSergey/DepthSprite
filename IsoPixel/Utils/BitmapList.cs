@@ -174,6 +174,25 @@ namespace IsoPixel
         [Category("BitmapListView")]
         public event OnGetItemImageEvent OnGetItemImage;
 
+        [Category("BitmapListView")]
+        public string SelectedId
+        {
+            get
+            {
+                if (selectedIndex >= 0 && selectedIndex < ids.Count)
+                {
+                    return ids[selectedIndex];
+                }
+                else { return default(string); }
+            }
+            set
+            {
+                selectedIndex = ids.IndexOf(value);
+                Invalidate();
+            }
+        }
+
+
         public void AddId(string id)
         {
             ids.Add(id);

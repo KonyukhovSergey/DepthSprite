@@ -40,14 +40,15 @@
             this.tsmiSave = new System.Windows.Forms.ToolStripMenuItem();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.tsslMode = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tsslInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.spriteEditor = new IsoPixel.DepthSpriteEditor();
             this.listContainedIn = new IsoPixel.BitmapList();
             this.listContains = new IsoPixel.BitmapList();
             this.listSprites = new IsoPixel.BitmapList();
             this.cmsSpriteList.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
+            this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -119,7 +120,7 @@
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(639, 9);
+            this.label2.Location = new System.Drawing.Point(568, 9);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(69, 13);
             this.label2.TabIndex = 5;
@@ -129,26 +130,35 @@
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(553, 9);
+            this.label3.Location = new System.Drawing.Point(482, 9);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(51, 13);
             this.label3.TabIndex = 7;
             this.label3.Text = "Contains:";
             // 
-            // statusStrip1
+            // statusStrip
             // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsslMode});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 481);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(734, 22);
-            this.statusStrip1.TabIndex = 9;
-            this.statusStrip1.Text = "statusStrip1";
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsslMode,
+            this.tsslInfo});
+            this.statusStrip.Location = new System.Drawing.Point(0, 395);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Size = new System.Drawing.Size(663, 24);
+            this.statusStrip.TabIndex = 9;
+            this.statusStrip.Text = "statusStrip1";
             // 
             // tsslMode
             // 
+            this.tsslMode.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
             this.tsslMode.Name = "tsslMode";
-            this.tsslMode.Size = new System.Drawing.Size(0, 17);
+            this.tsslMode.Size = new System.Drawing.Size(57, 19);
+            this.tsslMode.Text = "mode: ...";
+            // 
+            // tsslInfo
+            // 
+            this.tsslInfo.ForeColor = System.Drawing.Color.Black;
+            this.tsslInfo.Name = "tsslInfo";
+            this.tsslInfo.Size = new System.Drawing.Size(0, 19);
             // 
             // spriteEditor
             // 
@@ -157,7 +167,8 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.spriteEditor.Location = new System.Drawing.Point(98, 25);
             this.spriteEditor.Name = "spriteEditor";
-            this.spriteEditor.Size = new System.Drawing.Size(452, 466);
+            this.spriteEditor.Size = new System.Drawing.Size(381, 367);
+            this.spriteEditor.Sprite = null;
             this.spriteEditor.TabIndex = 8;
             this.spriteEditor.Text = "depthSpriteEditor1";
             // 
@@ -165,20 +176,24 @@
             // 
             this.listContainedIn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.listContainedIn.Location = new System.Drawing.Point(642, 25);
+            this.listContainedIn.Location = new System.Drawing.Point(571, 25);
             this.listContainedIn.Name = "listContainedIn";
-            this.listContainedIn.Size = new System.Drawing.Size(80, 466);
+            this.listContainedIn.SelectedId = null;
+            this.listContainedIn.Size = new System.Drawing.Size(80, 367);
             this.listContainedIn.TabIndex = 6;
             this.listContainedIn.Text = "bitmapList2";
+            this.listContainedIn.OnGetItemImage += new IsoPixel.BitmapList.OnGetItemImageEvent(this.listSprites_OnGetItemImage);
             // 
             // listContains
             // 
             this.listContains.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.listContains.Location = new System.Drawing.Point(556, 25);
+            this.listContains.Location = new System.Drawing.Point(485, 25);
             this.listContains.Name = "listContains";
-            this.listContains.Size = new System.Drawing.Size(80, 466);
+            this.listContains.SelectedId = null;
+            this.listContains.Size = new System.Drawing.Size(80, 367);
             this.listContains.TabIndex = 4;
+            this.listContains.OnGetItemImage += new IsoPixel.BitmapList.OnGetItemImageEvent(this.listSprites_OnGetItemImage);
             // 
             // listSprites
             // 
@@ -187,7 +202,8 @@
             this.listSprites.ContextMenuStrip = this.cmsSpriteList;
             this.listSprites.Location = new System.Drawing.Point(12, 25);
             this.listSprites.Name = "listSprites";
-            this.listSprites.Size = new System.Drawing.Size(80, 466);
+            this.listSprites.SelectedId = null;
+            this.listSprites.Size = new System.Drawing.Size(80, 367);
             this.listSprites.TabIndex = 3;
             this.listSprites.OnSelectItem += new IsoPixel.BitmapList.OnSelectItemEvent(this.listSprites_OnSelectItem);
             this.listSprites.OnGetItemImage += new IsoPixel.BitmapList.OnGetItemImageEvent(this.listSprites_OnGetItemImage);
@@ -197,8 +213,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(734, 503);
-            this.Controls.Add(this.statusStrip1);
+            this.ClientSize = new System.Drawing.Size(663, 419);
+            this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.spriteEditor);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.listContainedIn);
@@ -210,8 +226,8 @@
             this.Name = "IsoEdit";
             this.Text = "IsoEdit";
             this.cmsSpriteList.ResumeLayout(false);
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -234,8 +250,9 @@
         private BitmapList listContainedIn;
         private System.Windows.Forms.Label label3;
         private DepthSpriteEditor spriteEditor;
-        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel tsslMode;
+        private System.Windows.Forms.ToolStripStatusLabel tsslInfo;
 
 
     }
