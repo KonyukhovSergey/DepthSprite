@@ -54,6 +54,7 @@
     <Compile Include="DepthContainerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FastGraphicsTests.cs" />
+    <Compile Include="DepthBitmapTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\isoPixel\IsoPixel.csproj">

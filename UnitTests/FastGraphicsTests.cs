@@ -28,6 +28,17 @@ namespace UnitTests
         }
 
         [TestMethod]
+        public void FastGraphicsInit()
+        {
+            FastGraphics fg = new FastGraphics(1, 1);
+            fg.SetPixel(0, 0, Color.Red);
+            Assert.AreEqual(Color.Red.ToArgb(), fg.Bitmap.GetPixel(0, 0).ToArgb());
+
+            FastGraphics fg2 = new FastGraphics(fg.Bitmap);
+            Assert.AreEqual(Color.Red.ToArgb(), fg.Bitmap.GetPixel(0, 0).ToArgb());
+        }
+
+        [TestMethod]
         public void TestSerialization()
         {
             FastGraphics fg = new FastGraphics(32, 32);

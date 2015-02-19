@@ -92,7 +92,7 @@ namespace IsoPixel
             get
             {
                 Update();
-                return base.Bitmap;
+                return cache.Bitmap;
             }
         }
 
