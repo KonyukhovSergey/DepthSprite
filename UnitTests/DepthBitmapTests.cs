@@ -42,6 +42,31 @@ namespace UnitTests
         }
 
         [TestMethod]
+        public void MoveSubSprite()
+        {
+            Assert.AreEqual(Color.Red.ToArgb(), dc["ds3"].Bitmap.GetPixel(0, 0).ToArgb());
+
+            dc["ds3"].subSprites[0].z = 1;
+            dc["ds3"].ClearCache();
+
+            Assert.AreEqual(Color.Green.ToArgb(), dc["ds3"].Bitmap.GetPixel(0, 0).ToArgb());
+            Assert.AreEqual(Color.Blue.ToArgb(), dc["ds3"].Bitmap.GetPixel(1, 0).ToArgb());
+        }
+
+        [TestMethod]
+        public void BackgroundTransparency()
+        {
+            FastGraphics fg = new FastGraphics(2, 1);
+            fg.SetPixel(0, 0, Color.Yellow);
+            fg.SetPixel(1, 0, Color.FromArgb(0, 0, 0, 0));
+            dc.Add(new DepthSprite(fg.Bitmap, "ds4", dc));
+            dc["ds4"].subSprites.Add(new SubSprite("ds2", 0, 0, 1));
+
+            Assert.AreEqual(Color.Yellow.ToArgb(), dc["ds4"].Bitmap.GetPixel(0, 0).ToArgb());
+            Assert.AreEqual(Color.Blue.ToArgb(), dc["ds4"].Bitmap.GetPixel(1, 0).ToArgb());            
+        }
+
+        [TestMethod]
         public void DepthSpriteInit()
         {
             FastGraphics fg = new FastGraphics(1, 1);

@@ -66,7 +66,7 @@ namespace IsoPixel
                 {
                     if (!IsInRect(px + x, py + y)) continue;
 
-                    if (source.GetColor(x, y).A > 0 && (pz + source.GetZ(x, y)) <= GetZ(x + px, y + py))
+                    if (source.GetColor(x, y).A > 0 && ((pz + source.GetZ(x, y)) <= GetZ(x + px, y + py) || GetColor(x + px, y + py).A == 0))
                     {
                         SetPixel(x + px, y + py, source.GetPixel(x, y));
                         SetZ(x + px, y + py, pz + source.GetZ(x, y));

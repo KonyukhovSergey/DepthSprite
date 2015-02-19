@@ -137,7 +137,7 @@ namespace IsoPixel
                 case EditorModes.ADD_SPRITE_TO_SPRITE:
                     if (container.CanAddSpriteToSprite(id, spriteEditor.Sprite.id))
                     {
-                        spriteEditor.Sprite.subSprites.Add(new SubSprite(id, 0, 0, -1));
+                        spriteEditor.Sprite.subSprites.Add(new SubSprite(id, 0, 0, 1));
                         spriteEditor.Sprite.ClearCache();
                         UpdateUI();
                     }
