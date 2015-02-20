@@ -57,7 +57,7 @@ namespace IsoPixel
                     string key = Path.GetFileNameWithoutExtension(fileName);
                     if (!container.ContainsKey(key))
                     {
-                        container.Add(new DepthSprite(Image.FromFile(fileName), key, container));
+                        new DepthSprite(Image.FromFile(fileName), key, container);
                         listSprites.AddId(key);
                     }
                 }

@@ -22,10 +22,10 @@ namespace UnitTests
             fg2.SetPixel(0, 0, Color.Green);
             fg2.SetPixel(1, 0, Color.Blue);
 
-            dc.Add(new DepthSprite(fg1.Bitmap, "ds1", dc));
-            dc.Add(new DepthSprite(fg2.Bitmap, "ds2", dc));
+            new DepthSprite(fg1.Bitmap, "ds1", dc);
+            new DepthSprite(fg2.Bitmap, "ds2", dc);
+            new DepthSprite(fg2.Bitmap, "ds3", dc);
 
-            dc.Add(new DepthSprite(fg2.Bitmap, "ds3", dc));
             dc["ds3"].subSprites.Add(new SubSprite("ds1", 0, 0, 0));
         }
 
@@ -59,7 +59,7 @@ namespace UnitTests
             FastGraphics fg = new FastGraphics(2, 1);
             fg.SetPixel(0, 0, Color.Yellow);
             fg.SetPixel(1, 0, Color.FromArgb(0, 0, 0, 0));
-            dc.Add(new DepthSprite(fg.Bitmap, "ds4", dc));
+            new DepthSprite(fg.Bitmap, "ds4", dc);
             dc["ds4"].subSprites.Add(new SubSprite("ds2", 0, 0, 1));
 
             Assert.AreEqual(Color.Yellow.ToArgb(), dc["ds4"].Bitmap.GetPixel(0, 0).ToArgb());

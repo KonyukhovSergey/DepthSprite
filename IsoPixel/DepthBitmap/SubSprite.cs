@@ -16,6 +16,11 @@ namespace IsoPixel
         public SubSprite(string id, int x, int y, int z)
         {
             this.id = id;
+            MoveTo(x, y, z);
+        }
+
+        public void MoveTo(int x, int y, int z)
+        {
             this.x = x;
             this.y = y;
             this.z = z;

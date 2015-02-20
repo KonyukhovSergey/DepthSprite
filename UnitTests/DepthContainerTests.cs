@@ -14,13 +14,13 @@ namespace UnitTests
         {
             dc = new DepthContainer();
 
-            dc.Add(new DepthSprite(4, 4, "id01", dc));
-            dc.Add(new DepthSprite(16, 16, "id02", dc));
-            dc.Add(new DepthSprite(8, 8, "id03", dc));
+            new DepthSprite(4, 4, "id01", dc);
+            new DepthSprite(16, 16, "id02", dc);
+            new DepthSprite(8, 8, "id03", dc);
             dc["id03"].subSprites.Add(new SubSprite("id01", 10, 10, 10));
             dc["id03"].subSprites.Add(new SubSprite("id02", 20, 10, 10));
-            dc.Add(new DepthSprite(1, 1, "id04", dc));
-            dc.Add(new DepthSprite(1, 1, "id05", dc));
+            new DepthSprite(1, 1, "id04", dc);
+            new DepthSprite(1, 1, "id05", dc);
             dc["id05"].subSprites.Add(new SubSprite("id04", 0, 0, 0));
             dc["id04"].subSprites.Add(new SubSprite("id01", 0, 0, 0));
             dc["id04"].subSprites.Add(new SubSprite("id03", 1, 1, 1));

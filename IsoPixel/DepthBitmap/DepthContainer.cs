@@ -50,10 +50,5 @@ namespace IsoPixel
 
             return true;
         }
-
-        public void Add(DepthSprite sprite)
-        {
-            this[sprite.id] = sprite;
-        }
     }
 }

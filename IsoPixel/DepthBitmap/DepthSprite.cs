@@ -44,6 +44,7 @@ namespace IsoPixel
         {
             this.container = container;
             this.id = id;
+            container[id] = this;
             Clear(0, 0, 0, 0, 0);
         }
 
@@ -66,9 +67,15 @@ namespace IsoPixel
             return true;
         }
 
+        public bool CanAddSubSprite(string subSpriteId)
+        {
+            return container.CanAddSpriteToSprite(subSpriteId, id);
+        }
+
         public DepthSprite(Image image, string id, DepthContainer container)
             : base(image)
         {
+            container[id] = this;
             this.container = container;
             this.id = id;
         }
