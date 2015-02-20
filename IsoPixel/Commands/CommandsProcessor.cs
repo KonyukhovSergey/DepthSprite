@@ -10,7 +10,14 @@ namespace IsoPixel
     {
         private List<CommandBase> commands = new List<CommandBase>();
         private int currentCommandIndex = 0;
-        private int historySize = 256;
+        private int historySize;
+
+        public CommandsProcessor() : this(256) { }
+
+        public CommandsProcessor(int historySize)
+        {
+            this.historySize = historySize;
+        }
 
         public void Execute(CommandBase command)
         {
@@ -30,7 +37,7 @@ namespace IsoPixel
 
         public void Undo()
         {
-            if (currentCommandIndex > 0)
+            if (CanUndo)
             {
                 currentCommandIndex--;
                 commands[currentCommandIndex].Undo();
@@ -39,11 +46,15 @@ namespace IsoPixel
 
         public void Redo()
         {
-            if (currentCommandIndex < commands.Count)
+            if (CanRedo)
             {
                 commands[currentCommandIndex].Execute();
                 currentCommandIndex++;
             }
         }
+
+        public bool CanUndo { get { return currentCommandIndex > 0; } }
+
+        public bool CanRedo { get { return currentCommandIndex < commands.Count; } }
     }
 }
