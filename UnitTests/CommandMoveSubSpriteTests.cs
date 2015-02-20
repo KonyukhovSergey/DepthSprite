@@ -26,12 +26,12 @@ namespace UnitTests
             CommandBase command = new CommandMoveSubSprite(ds2, ss, 1, 0, 0);
 
             Assert.IsTrue(command.Execute());
-            Assert.AreEqual(Color.Green.ToArgb(), ds2.GetPixel(0, 0));
-            Assert.AreEqual(Color.Red.ToArgb(), ds2.GetPixel(1, 0));
+            Assert.AreEqual(Color.Green.ToArgb(), ds2.Bitmap.GetPixel(0, 0).ToArgb());
+            Assert.AreEqual(Color.Red.ToArgb(), ds2.Bitmap.GetPixel(1, 0).ToArgb());
 
             command.Undo();
-            Assert.AreEqual(Color.Red.ToArgb(), ds2.GetPixel(0, 0));
-            Assert.AreEqual(Color.Blue.ToArgb(), ds2.GetPixel(1, 0));
+            Assert.AreEqual(Color.Red.ToArgb(), ds2.Bitmap.GetPixel(0, 0).ToArgb());
+            Assert.AreEqual(Color.Blue.ToArgb(), ds2.Bitmap.GetPixel(1, 0).ToArgb());
         }
     }
 }
