@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\CommandsProcessor.cs" />
     <Compile Include="Commands\CommandMoveSubSprite.cs" />
     <Compile Include="Commands\CommandRemoveSubSprite.cs" />
     <Compile Include="Commands\CommandAddSubSprite.cs" />
@@ -56,7 +57,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Commands\CommandBase.cs" />
-    <Compile Include="RLE.cs" />
+    <Compile Include="Utils\RLE.cs" />
     <Compile Include="Utils\DragHelper.cs" />
     <Compile Include="Utils\FastGraphics.cs" />
     <Compile Include="Utils\BitmapList.cs">
