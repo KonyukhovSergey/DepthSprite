@@ -76,6 +76,23 @@ namespace UnitTests
             Assert.AreEqual(2, command.Counter);
         }
 
+        [TestMethod]
+        public void CommandsProcessorClear()
+        {
+            CommandsProcessor cp = new CommandsProcessor(2);
+            CommandForTest command = new CommandForTest();
+
+            cp.Execute(command);
+            cp.Execute(command);
+
+            cp.ClearHistory();
+            cp.Undo();
+            Assert.AreEqual(2, command.Counter);
+
+            cp.Redo();
+            Assert.AreEqual(2, command.Counter);
+        }
+
         internal class CommandForTest : CommandBase
         {
             private int counter = 0;
@@ -88,7 +105,7 @@ namespace UnitTests
                 return true;
             }
 
-            public override void Undo()
+            public override void Cancel()
             {
                 counter--;
             }

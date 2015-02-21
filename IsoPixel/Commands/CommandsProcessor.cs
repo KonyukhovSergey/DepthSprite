@@ -40,7 +40,7 @@ namespace IsoPixel
             if (CanUndo)
             {
                 currentCommandIndex--;
-                commands[currentCommandIndex].Undo();
+                commands[currentCommandIndex].Cancel();
             }
         }
 
@@ -51,6 +51,12 @@ namespace IsoPixel
                 commands[currentCommandIndex].Execute();
                 currentCommandIndex++;
             }
+        }
+
+        public void ClearHistory()
+        {
+            commands.Clear();
+            currentCommandIndex = 0;
         }
 
         public bool CanUndo { get { return currentCommandIndex > 0; } }

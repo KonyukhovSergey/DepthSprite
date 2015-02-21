@@ -33,7 +33,7 @@ namespace IsoPixel
             return false;
         }
 
-        public override void Undo()
+        public override void Cancel()
         {
             sprite.SetZ(x, y, prevZValue);
             sprite.ClearCache();

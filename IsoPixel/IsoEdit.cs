@@ -15,6 +15,7 @@ namespace IsoPixel
     {
         private DepthContainer container = new DepthContainer();
         private EditorModes mode = EditorModes.DEFAULT;
+        private CommandsProcessor commands = new CommandsProcessor();
 
         public IsoEdit()
         {

@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\CommandImportSprite.cs" />
     <Compile Include="Commands\CommandsProcessor.cs" />
     <Compile Include="Commands\CommandMoveSubSprite.cs" />
     <Compile Include="Commands\CommandRemoveSubSprite.cs" />

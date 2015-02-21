@@ -29,7 +29,7 @@ namespace IsoPixel
             return false;
         }
 
-        public override void Undo()
+        public override void Cancel()
         {
             sprite.subSprites.Remove(subSprite);
             sprite.ClearCache();

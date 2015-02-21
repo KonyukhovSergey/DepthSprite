@@ -61,6 +61,7 @@
     <Compile Include="DepthBitmapTests.cs" />
     <Compile Include="CommandSetColorTests.cs" />
     <Compile Include="CommandsProcessorTests.cs" />
+    <Compile Include="CommandImportSpriteTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\isoPixel\IsoPixel.csproj">

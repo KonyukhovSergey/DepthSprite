@@ -2,7 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using IsoPixel;
 using System.Drawing;
-using IsoPixel.Commands;
 
 namespace UnitTests
 {
@@ -29,7 +28,7 @@ namespace UnitTests
             Assert.AreEqual(Color.Green.ToArgb(), ds2.Bitmap.GetPixel(0, 0).ToArgb());
             Assert.AreEqual(Color.Red.ToArgb(), ds2.Bitmap.GetPixel(1, 0).ToArgb());
 
-            command.Undo();
+            command.Cancel();
             Assert.AreEqual(Color.Red.ToArgb(), ds2.Bitmap.GetPixel(0, 0).ToArgb());
             Assert.AreEqual(Color.Blue.ToArgb(), ds2.Bitmap.GetPixel(1, 0).ToArgb());
         }

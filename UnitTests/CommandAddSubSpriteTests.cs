@@ -20,7 +20,7 @@ namespace UnitTests
             Assert.IsTrue(command.Execute());
             Assert.AreEqual("id01", dc["id02"].subSprites[0].id);
 
-            command.Undo();
+            command.Cancel();
             Assert.AreEqual(0, dc["id02"].subSprites.Count);
 
             CommandBase commandFail = new CommandAddSubSprite(new SubSprite("id01", 0, 0, 0), dc["id01"]);

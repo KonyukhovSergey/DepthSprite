@@ -18,7 +18,7 @@ namespace UnitTests
             command.Execute();
             Assert.AreEqual(2, ds.GetZ(0, 0));
 
-            command.Undo();
+            command.Cancel();
             Assert.AreEqual(1, ds.GetZ(0, 0));
 
             CommandBase commandFail = new CommandSetZ(10, 0, 0, ds);

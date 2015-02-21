@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IsoPixel.Commands
+namespace IsoPixel
 {
     public class CommandMoveSubSprite : CommandBase
     {
@@ -34,7 +34,7 @@ namespace IsoPixel.Commands
             return true;
         }
 
-        public override void Undo()
+        public override void Cancel()
         {
             subSprite.MoveTo(px, py, pz);
             sprite.ClearCache();

@@ -18,7 +18,7 @@ namespace UnitTests
             Assert.IsTrue(command.Execute());
             Assert.AreEqual(16, ds.GetPixel(0, 0));
 
-            command.Undo();
+            command.Cancel();
             Assert.AreEqual(32, ds.GetPixel(0, 0));
 
             CommandBase commandFail = new CommandSetColor(10, 0, 0, ds);
