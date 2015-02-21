@@ -20,6 +20,11 @@ namespace IsoPixel
 
         public override bool Execute()
         {
+            if (sprite == null || subSprite == null)
+            {
+                return false;
+            }
+
             if (sprite.CanAddSubSprite(subSprite.id))
             {
                 sprite.subSprites.Add(subSprite);

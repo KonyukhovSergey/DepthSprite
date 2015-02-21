@@ -19,7 +19,7 @@ namespace IsoPixel
             this.historySize = historySize;
         }
 
-        public void Execute(CommandBase command)
+        public bool Execute(CommandBase command)
         {
             if (command.Execute())
             {
@@ -32,7 +32,9 @@ namespace IsoPixel
                     commands.RemoveAt(0);
                     currentCommandIndex--;
                 }
+                return true;
             }
+            return false;
         }
 
         public void Undo()

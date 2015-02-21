@@ -10,11 +10,12 @@ namespace UnitTests
         [TestMethod]
         public void TestCommandImportSprite()
         {
+            BitmapList list = new BitmapList();
             DepthContainer dc = new DepthContainer();
             FastGraphics fg = new FastGraphics(1, 1);
             fg.SetPixel(0, 0, 32);
 
-            CommandBase command = new CommandImportSprite(fg.Bitmap, "dot", dc);
+            CommandBase command = new CommandImportSprite(fg.Bitmap, "dot", dc, list);
 
             Assert.IsTrue(command.Execute());
             Assert.IsNotNull(dc["dot"]);

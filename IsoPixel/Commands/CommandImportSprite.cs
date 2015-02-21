@@ -14,16 +14,18 @@ namespace IsoPixel
         private Image image;
         private string id;
         private DepthSprite importedSprite;
+        private BitmapList list;
 
-        public CommandImportSprite(Image image, string id, DepthContainer container)
+        public CommandImportSprite(Image image, string id, DepthContainer container, BitmapList list)
         {
             this.container = container;
             this.image = image;
             this.id = id;
+            this.list = list;
         }
 
-        public CommandImportSprite(string fileName, DepthContainer container) :
-            this(Image.FromFile(fileName), Path.GetFileNameWithoutExtension(fileName), container)
+        public CommandImportSprite(string fileName, DepthContainer container, BitmapList list) :
+            this(Image.FromFile(fileName), Path.GetFileNameWithoutExtension(fileName), container, list)
         {
         }
 
@@ -32,6 +34,7 @@ namespace IsoPixel
             if (!container.ContainsKey(id))
             {
                 importedSprite = new DepthSprite(image, id, container);
+                list.AddId(id);
                 return true;
             }
             return false;
@@ -40,6 +43,7 @@ namespace IsoPixel
         public override void Cancel()
         {
             container.Remove(id);
+            list.RemoveId(id);
         }
     }
 }

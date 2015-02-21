@@ -35,6 +35,14 @@ namespace IsoPixel
                     mode = EditorModes.ADD_SPRITE_TO_SPRITE;
                     SetInfo("pick sprite for add to current sprite...");
                     break;
+
+                case Keys.Z | Keys.Control:
+                    commands.Undo();
+                    break;
+
+                case Keys.Y | Keys.Control:
+                    commands.Redo();
+                    break;
             }
 
             UpdateUI();
@@ -55,14 +63,8 @@ namespace IsoPixel
             {
                 foreach (var fileName in fileDialog.FileNames)
                 {
-                    string key = Path.GetFileNameWithoutExtension(fileName);
-                    if (!container.ContainsKey(key))
-                    {
-                        new DepthSprite(Image.FromFile(fileName), key, container);
-                        listSprites.AddId(key);
-                    }
+                    commands.Execute(new CommandImportSprite(fileName, container, listSprites));
                 }
-                UpdateUI();
             }
         }
 
@@ -108,6 +110,8 @@ namespace IsoPixel
                     listSprites.AddId(item);
                 }
 
+                commands.ClearHistory();
+
                 UpdateUI();
             }
         }
@@ -125,9 +129,9 @@ namespace IsoPixel
                             listContains.AddId(ss.id);
                         }
                         listContainedIn.RemoveAll();
-                        foreach(var ds in container.Values)
+                        foreach (var ds in container.Values)
                         {
-                            if (ds.subSprites.Count(e => e.id == id)>0)
+                            if (ds.subSprites.Count(e => e.id == id) > 0)
                             {
                                 listContainedIn.AddId(ds.id);
                             }
@@ -136,19 +140,12 @@ namespace IsoPixel
                     break;
 
                 case EditorModes.ADD_SPRITE_TO_SPRITE:
-                    if (container.CanAddSpriteToSprite(id, spriteEditor.Sprite.id))
+                    if (commands.Execute(new CommandAddSubSprite(new SubSprite(id, 0, 0, 0), spriteEditor.Sprite)))
                     {
-                        spriteEditor.Sprite.subSprites.Add(new SubSprite(id, 0, 0, 1));
-                        spriteEditor.Sprite.ClearCache();
-                        SetInfo("sprite added");
-                        mode = EditorModes.DEFAULT;
-                        UpdateUI();
+                        listContains.SelectedId = spriteEditor.Sprite.id;
                     }
-                    else
-                    {
-                        SetError("cycle references");
-                    }
-                    listContains.SelectedId = spriteEditor.Sprite.id;
+                    mode = EditorModes.DEFAULT;
+                    UpdateUI();
                     break;
             }
         }
