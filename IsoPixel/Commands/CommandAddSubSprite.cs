@@ -10,12 +10,14 @@ namespace IsoPixel
     public class CommandAddSubSprite : CommandBase
     {
         private DepthSprite sprite;
+        private BitmapList list;
         private SubSprite subSprite;
 
-        public CommandAddSubSprite(SubSprite subSprite, DepthSprite sprite)
+        public CommandAddSubSprite(SubSprite subSprite, DepthSprite sprite, BitmapList list)
         {
             this.sprite = sprite;
             this.subSprite = subSprite;
+            this.list = list;
         }
 
         public override bool Execute()
@@ -29,6 +31,7 @@ namespace IsoPixel
             {
                 sprite.subSprites.Add(subSprite);
                 sprite.ClearCache();
+                list.AddId(subSprite.id);
                 return true;
             }
             return false;
@@ -38,6 +41,7 @@ namespace IsoPixel
         {
             sprite.subSprites.Remove(subSprite);
             sprite.ClearCache();
+            list.RemoveId(subSprite.id);
         }
 
         public override string ToString()

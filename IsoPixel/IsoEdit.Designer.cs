@@ -45,7 +45,7 @@
             this.tsslInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.spriteEditor = new IsoPixel.DepthSpriteEditor();
             this.listContainedIn = new IsoPixel.BitmapList();
-            this.listContains = new IsoPixel.BitmapList();
+            this.listSubSprites = new IsoPixel.BitmapList();
             this.listSprites = new IsoPixel.BitmapList();
             this.cmsSpriteList.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -184,16 +184,16 @@
             this.listContainedIn.Text = "bitmapList2";
             this.listContainedIn.OnGetItemImage += new IsoPixel.BitmapList.OnGetItemImageEvent(this.listSprites_OnGetItemImage);
             // 
-            // listContains
+            // listSubSprites
             // 
-            this.listContains.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.listSubSprites.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.listContains.Location = new System.Drawing.Point(485, 25);
-            this.listContains.Name = "listContains";
-            this.listContains.SelectedId = null;
-            this.listContains.Size = new System.Drawing.Size(80, 367);
-            this.listContains.TabIndex = 4;
-            this.listContains.OnGetItemImage += new IsoPixel.BitmapList.OnGetItemImageEvent(this.listSprites_OnGetItemImage);
+            this.listSubSprites.Location = new System.Drawing.Point(485, 25);
+            this.listSubSprites.Name = "listSubSprites";
+            this.listSubSprites.SelectedId = null;
+            this.listSubSprites.Size = new System.Drawing.Size(80, 367);
+            this.listSubSprites.TabIndex = 4;
+            this.listSubSprites.OnGetItemImage += new IsoPixel.BitmapList.OnGetItemImageEvent(this.listSprites_OnGetItemImage);
             // 
             // listSprites
             // 
@@ -219,7 +219,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.listContainedIn);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.listContains);
+            this.Controls.Add(this.listSubSprites);
             this.Controls.Add(this.listSprites);
             this.Controls.Add(this.label1);
             this.MinimumSize = new System.Drawing.Size(400, 300);
@@ -245,7 +245,7 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiLoad;
         private System.Windows.Forms.ToolStripMenuItem tsmiSave;
         private BitmapList listSprites;
-        private BitmapList listContains;
+        private BitmapList listSubSprites;
         private System.Windows.Forms.Label label2;
         private BitmapList listContainedIn;
         private System.Windows.Forms.Label label3;

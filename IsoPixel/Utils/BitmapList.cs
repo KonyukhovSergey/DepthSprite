@@ -106,16 +106,15 @@ namespace IsoPixel
         {
             int index = GetIndexForPosition(e.Y);
 
-            if (index != selectedIndex)
-            {
-                selectedIndex = index;
-                Invalidate();
+            selectedIndex = index;
 
-                if (OnSelectItem != null && selectedIndex >= 0 && selectedIndex < count)
-                {
-                    OnSelectItem(ids[selectedIndex]);
-                }
+            if (OnSelectItem != null && selectedIndex >= 0 && selectedIndex < count)
+            {
+                OnSelectItem(ids[selectedIndex]);
             }
+
+            Invalidate();
+
             base.OnMouseClick(e);
         }
 

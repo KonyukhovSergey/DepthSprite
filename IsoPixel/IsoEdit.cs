@@ -21,6 +21,8 @@ namespace IsoPixel
         {
             InitializeComponent();
             UpdateUI();
+            SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+            SetStyle(ControlStyles.ResizeRedraw, false);
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -42,6 +44,10 @@ namespace IsoPixel
 
                 case Keys.Y | Keys.Control:
                     commands.Redo();
+                    break;
+
+                case Keys.Z:
+                    mode = EditorModes.SET_Z_VALUES;
                     break;
             }
 
@@ -123,10 +129,10 @@ namespace IsoPixel
                 case EditorModes.DEFAULT:
                     {
                         spriteEditor.Sprite = container[id];
-                        listContains.RemoveAll();
+                        listSubSprites.RemoveAll();
                         foreach (var ss in spriteEditor.Sprite.subSprites)
                         {
-                            listContains.AddId(ss.id);
+                            listSubSprites.AddId(ss.id);
                         }
                         listContainedIn.RemoveAll();
                         foreach (var ds in container.Values)
@@ -140,9 +146,9 @@ namespace IsoPixel
                     break;
 
                 case EditorModes.ADD_SPRITE_TO_SPRITE:
-                    if (commands.Execute(new CommandAddSubSprite(new SubSprite(id, 0, 0, 0), spriteEditor.Sprite)))
+                    if (commands.Execute(new CommandAddSubSprite(new SubSprite(id, 0, 0, 0), spriteEditor.Sprite, listSubSprites)))
                     {
-                        listContains.SelectedId = spriteEditor.Sprite.id;
+                        listSprites.SelectedId = spriteEditor.Sprite.id;
                     }
                     mode = EditorModes.DEFAULT;
                     UpdateUI();
@@ -173,5 +179,6 @@ namespace IsoPixel
         ADD_SPRITE_TO_SPRITE,
         SELECT_RECTANGLE,
         MOVE_SELECTION,
+        SET_Z_VALUES,
     }
 }

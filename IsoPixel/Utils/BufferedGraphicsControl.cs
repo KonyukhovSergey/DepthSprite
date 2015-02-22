@@ -13,9 +13,11 @@ namespace IsoPixel
         private Bitmap bitmap = null;
         private Graphics graphics = null;
 
-        protected override void OnPaintBackground(PaintEventArgs pevent)
+        protected override void OnCreateControl()
         {
-            //base.OnPaintBackground(pevent);
+            base.OnCreateControl();
+            SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+            SetStyle(ControlStyles.AllPaintingInWmPaint, true);
         }
 
         protected override void OnPaint(PaintEventArgs e)

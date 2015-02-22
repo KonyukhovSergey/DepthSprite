@@ -46,6 +46,8 @@ namespace IsoPixel
             }
         }
 
+
+
         protected override void OnMouseDown(System.Windows.Forms.MouseEventArgs e)
         {
             dragHelper.OnMouseDown(e, left, top);
@@ -59,6 +61,7 @@ namespace IsoPixel
                 left = dragHelper.CurrentObjectLocationX;
                 top = dragHelper.CurrentObjectLocationY;
                 Invalidate();
+                return;
             }
             base.OnMouseMove(e);
         }
@@ -70,6 +73,7 @@ namespace IsoPixel
                 left = dragHelper.CurrentObjectLocationX;
                 top = dragHelper.CurrentObjectLocationY;
                 Invalidate();
+                return;
             }
             base.OnMouseUp(e);
         }
