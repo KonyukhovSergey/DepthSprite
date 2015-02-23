@@ -58,7 +58,8 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Commands\CommandBase.cs" />
-    <Compile Include="EditorModeBase.cs" />
+    <Compile Include="EditorModes\EditorModeBase.cs" />
+    <Compile Include="EditorModes\ModeSetupView.cs" />
     <Compile Include="Utils\RLE.cs" />
     <Compile Include="Utils\DragHelper.cs" />
     <Compile Include="Utils\FastGraphics.cs" />
@@ -111,9 +112,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="EditorModes\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

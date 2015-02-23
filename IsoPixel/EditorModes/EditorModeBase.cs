@@ -21,7 +21,7 @@ namespace IsoPixel
         public virtual bool OnMouseMove(MouseEventArgs e) { return false; }
         public virtual bool OnMouseUp(MouseEventArgs e) { return false; }
 
-        public virtual void OnDraw(Graphics gr) { };
+        public virtual void OnDraw(Graphics gr) { }
 
         public virtual string Name { get { return GetType().ToString(); } }
     }

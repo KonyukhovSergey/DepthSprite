@@ -13,7 +13,7 @@ namespace IsoPixel
     {
         private DepthSprite sprite;
 
-        private int left = 0, top = 0, zoom = 8;
+        public int left = 0, top = 0, zoom = 8;
 
         public DepthSprite Sprite
         {
@@ -21,7 +21,14 @@ namespace IsoPixel
             set { sprite = value; Invalidate(); }
         }
 
-        public EditorModeBase Mode { get; set; }
+        public DepthSpriteEditor()
+        {
+            mode = new EditorModeBase(this);
+        }
+
+        private EditorModeBase mode;
+
+        public EditorModeBase Mode { get { return mode; } set { mode = value; } }
 
         protected override void OnBufferSetup(Graphics gr)
         {
@@ -45,12 +52,12 @@ namespace IsoPixel
                 //}
             }
 
-            Mode.OnDraw(gr);
+            mode.OnDraw(gr);
         }
 
         protected override void OnMouseDown(System.Windows.Forms.MouseEventArgs e)
         {
-            if (Mode.OnMouseDown(e))
+            if (mode.OnMouseDown(e))
             {
                 return;
             }
@@ -60,7 +67,7 @@ namespace IsoPixel
 
         protected override void OnMouseMove(System.Windows.Forms.MouseEventArgs e)
         {
-            if (Mode.OnMouseMove(e))
+            if (mode.OnMouseMove(e))
             {
                 return;
             }
@@ -70,7 +77,7 @@ namespace IsoPixel
 
         protected override void OnMouseUp(System.Windows.Forms.MouseEventArgs e)
         {
-            if (Mode.OnMouseUp(e))
+            if (mode.OnMouseUp(e))
             {
                 return;
             }
