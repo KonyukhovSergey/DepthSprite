@@ -58,6 +58,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Commands\CommandBase.cs" />
+    <Compile Include="EditorModeBase.cs" />
     <Compile Include="Utils\RLE.cs" />
     <Compile Include="Utils\DragHelper.cs" />
     <Compile Include="Utils\FastGraphics.cs" />
@@ -109,6 +110,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="EditorModes\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

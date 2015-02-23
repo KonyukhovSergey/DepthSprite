@@ -14,14 +14,14 @@ namespace IsoPixel
         private DepthSprite sprite;
 
         private int left = 0, top = 0, zoom = 8;
-        private int state = 0;
-        private DragHelper dragHelper = new DragHelper();
 
         public DepthSprite Sprite
         {
             get { return sprite; }
             set { sprite = value; Invalidate(); }
         }
+
+        public EditorModeBase Mode { get; set; }
 
         protected override void OnBufferSetup(Graphics gr)
         {
@@ -38,43 +38,43 @@ namespace IsoPixel
                 gr.FillRectangle(Brushes.SlateGray, left, top, sprite.Width * zoom, sprite.Height * zoom);
                 gr.DrawImage(sprite.Bitmap, left, top, sprite.Width * zoom, sprite.Height * zoom);
 
-                foreach (var subSprite in sprite.subSprites)
-                {
-                    DepthSprite ds = sprite.container[subSprite.id];
-                    gr.DrawRectangle(Pens.LightGreen, subSprite.x * zoom + left, subSprite.y * zoom + top, ds.Width * 8, ds.Height * 8);
-                }
+                //foreach (var subSprite in sprite.subSprites)
+                //{
+                //    DepthSprite ds = sprite.container[subSprite.id];
+                //    gr.DrawRectangle(Pens.LightGreen, subSprite.x * zoom + left, subSprite.y * zoom + top, ds.Width * 8, ds.Height * 8);
+                //}
             }
+
+            Mode.OnDraw(gr);
         }
-
-
 
         protected override void OnMouseDown(System.Windows.Forms.MouseEventArgs e)
         {
-            dragHelper.OnMouseDown(e, left, top);
+            if (Mode.OnMouseDown(e))
+            {
+                return;
+            }
+
             base.OnMouseDown(e);
         }
 
         protected override void OnMouseMove(System.Windows.Forms.MouseEventArgs e)
         {
-            if (dragHelper.OnMouseMove(e))
+            if (Mode.OnMouseMove(e))
             {
-                left = dragHelper.CurrentObjectLocationX;
-                top = dragHelper.CurrentObjectLocationY;
-                Invalidate();
                 return;
             }
+
             base.OnMouseMove(e);
         }
 
         protected override void OnMouseUp(System.Windows.Forms.MouseEventArgs e)
         {
-            if (dragHelper.OnMouseUp(e))
+            if (Mode.OnMouseUp(e))
             {
-                left = dragHelper.CurrentObjectLocationX;
-                top = dragHelper.CurrentObjectLocationY;
-                Invalidate();
                 return;
             }
+
             base.OnMouseUp(e);
         }
     }

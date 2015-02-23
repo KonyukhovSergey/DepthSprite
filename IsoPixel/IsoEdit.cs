@@ -33,6 +33,7 @@ namespace IsoPixel
                     mode = EditorModes.DEFAULT;
                     SetInfo("");
                     break;
+
                 case Keys.A:
                     mode = EditorModes.ADD_SPRITE_TO_SPRITE;
                     SetInfo("pick sprite for add to current sprite...");
