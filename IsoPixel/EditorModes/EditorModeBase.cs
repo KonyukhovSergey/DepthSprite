@@ -10,7 +10,7 @@ namespace IsoPixel
 {
     public class EditorModeBase
     {
-        private DepthSpriteEditor editor;
+        protected DepthSpriteEditor editor;
 
         public EditorModeBase(DepthSpriteEditor editor)
         {

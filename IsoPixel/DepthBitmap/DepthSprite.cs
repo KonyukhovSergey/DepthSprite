@@ -110,6 +110,5 @@ namespace IsoPixel
             this.container = container;
             this.id = id;
         }
-
     }
 }

@@ -17,12 +17,15 @@ namespace IsoPixel
         private EditorModes mode = EditorModes.DEFAULT;
         private CommandsProcessor commands = new CommandsProcessor();
 
+        private IDictionary<EditorModes, EditorModeBase> modes = new Dictionary<EditorModes, EditorModeBase>();
+
         public IsoEdit()
         {
             InitializeComponent();
             UpdateUI();
-            SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
-            SetStyle(ControlStyles.ResizeRedraw, false);
+
+            modes[EditorModes.DEFAULT] = new EditorModeBase(spriteEditor);
+            modes[EditorModes.SETUP_VIEW] = new ModeSetupView(spriteEditor);
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -30,12 +33,16 @@ namespace IsoPixel
             switch (keyData)
             {
                 case Keys.Escape:
-                    mode = EditorModes.DEFAULT;
+                    Mode = EditorModes.DEFAULT;
                     SetInfo("");
                     break;
 
+                case Keys.V:
+                    Mode = EditorModes.SETUP_VIEW;
+                    break;
+
                 case Keys.A:
-                    mode = EditorModes.ADD_SPRITE_TO_SPRITE;
+                    Mode = EditorModes.ADD_SPRITE_TO_SPRITE;
                     SetInfo("pick sprite for add to current sprite...");
                     break;
 
@@ -48,7 +55,7 @@ namespace IsoPixel
                     break;
 
                 case Keys.Z:
-                    mode = EditorModes.SET_Z_VALUES;
+                    Mode = EditorModes.SET_Z_VALUES;
                     break;
             }
 
@@ -71,6 +78,20 @@ namespace IsoPixel
                 foreach (var fileName in fileDialog.FileNames)
                 {
                     commands.Execute(new CommandImportSprite(fileName, container, listSprites));
+                }
+            }
+        }
+
+        private EditorModes Mode
+        {
+            get { return mode; }
+            set
+            {
+                mode = value;
+                if (modes.ContainsKey(mode))
+                {
+                    spriteEditor.Mode = modes[mode];
+                    SetInfo("current mode: " + spriteEditor.Mode.Name);
                 }
             }
         }
@@ -125,7 +146,7 @@ namespace IsoPixel
 
         private void listSprites_OnSelectItem(string id)
         {
-            switch (mode)
+            switch (Mode)
             {
                 case EditorModes.DEFAULT:
                     {
@@ -181,5 +202,6 @@ namespace IsoPixel
         SELECT_RECTANGLE,
         MOVE_SELECTION,
         SET_Z_VALUES,
+        SETUP_VIEW,
     }
 }

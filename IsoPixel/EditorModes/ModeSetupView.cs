@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace IsoPixel
 {
-    public class ModeSetupView: EditorModeBase
+    public class ModeSetupView : EditorModeBase
     {
         private Point startObjectLocation = new Point();
         private Point startMouseLocation = new Point();
@@ -17,17 +17,29 @@ namespace IsoPixel
 
         public override bool OnMouseDown(System.Windows.Forms.MouseEventArgs e)
         {
-            return base.OnMouseDown(e);
+            isMove = true;
+            startMouseLocation = e.Location;
+            startObjectLocation.X = editor.left;
+            startObjectLocation.Y = editor.top;
+            return true;
         }
 
         public override bool OnMouseMove(System.Windows.Forms.MouseEventArgs e)
         {
-            return base.OnMouseMove(e);
+            if(isMove)
+            {
+                editor.left = (e.X - startMouseLocation.X) + startObjectLocation.X;
+                editor.top = (e.Y - startMouseLocation.Y) + startObjectLocation.Y;
+                editor.Invalidate();
+            }
+            return true;
         }
 
         public override bool OnMouseUp(System.Windows.Forms.MouseEventArgs e)
         {
-             return base.OnMouseUp(e);
+            OnMouseMove(e);
+            isMove = false;
+            return true;
         }
     }
 }
