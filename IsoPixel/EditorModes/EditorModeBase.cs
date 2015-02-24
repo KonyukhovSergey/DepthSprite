@@ -17,6 +17,8 @@ namespace IsoPixel
             this.editor = editor;
         }
 
+        public virtual bool OnKeyDown(KeyEventArgs e) { return false; }
+
         public virtual bool OnMouseDown(MouseEventArgs e) { return false; }
         public virtual bool OnMouseMove(MouseEventArgs e) { return false; }
         public virtual bool OnMouseUp(MouseEventArgs e) { return false; }

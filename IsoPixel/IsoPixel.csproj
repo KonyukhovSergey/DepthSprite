@@ -59,6 +59,7 @@
     </Compile>
     <Compile Include="Commands\CommandBase.cs" />
     <Compile Include="EditorModes\EditorModeBase.cs" />
+    <Compile Include="EditorModes\ModeEditZValues.cs" />
     <Compile Include="EditorModes\ModeSetupView.cs" />
     <Compile Include="Utils\RLE.cs" />
     <Compile Include="Utils\FastGraphics.cs" />

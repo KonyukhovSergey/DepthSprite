@@ -54,6 +54,22 @@ namespace IsoPixel
             mode.OnDraw(gr);
         }
 
+        protected override void OnMouseEnter(EventArgs e)
+        {
+            Focus();
+            base.OnMouseEnter(e);
+        }
+
+        protected override void OnKeyDown(System.Windows.Forms.KeyEventArgs e)
+        {
+            if (mode.OnKeyDown(e))
+            {
+                return;
+            }
+
+            base.OnKeyDown(e);
+        }
+
         protected override void OnMouseDown(System.Windows.Forms.MouseEventArgs e)
         {
             if (mode.OnMouseDown(e))

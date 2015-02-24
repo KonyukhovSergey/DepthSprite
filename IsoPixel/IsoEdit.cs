@@ -57,6 +57,9 @@ namespace IsoPixel
                 case Keys.Z:
                     Mode = EditorModes.SET_Z_VALUES;
                     break;
+
+                default:
+                    return false;
             }
 
             UpdateUI();

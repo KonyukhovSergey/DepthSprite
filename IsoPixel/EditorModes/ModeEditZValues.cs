@@ -7,32 +7,13 @@ using System.Threading.Tasks;
 
 namespace IsoPixel
 {
-    public class ModeSetupView : EditorModeBase
+    public class ModeEditZValues : EditorModeBase
     {
         private Point startObjectLocation = new Point();
         private Point startMouseLocation = new Point();
         private bool isMove = false;
 
-        public ModeSetupView(DepthSpriteEditor editor) : base(editor) { }
-
-        public override bool OnKeyDown(System.Windows.Forms.KeyEventArgs e)
-        {
-            if (e.KeyData == System.Windows.Forms.Keys.Add)
-            {
-                if (editor.zoom < 32) { editor.zoom++; }
-                editor.Invalidate();
-                return true;
-            }
-
-            if (e.KeyData == System.Windows.Forms.Keys.Subtract)
-            {
-                if (editor.zoom > 1) { editor.zoom--; }
-                editor.Invalidate();
-                return true;
-            }
-
-            return base.OnKeyDown(e);
-        }
+        public ModeEditZValues(DepthSpriteEditor editor) : base(editor) { }
 
         public override bool OnMouseDown(System.Windows.Forms.MouseEventArgs e)
         {
