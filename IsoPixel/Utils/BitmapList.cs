@@ -57,11 +57,6 @@ namespace IsoPixel
             return (position - top) / (size + tile + padding);
         }
 
-        protected override void OnBufferSetup(System.Drawing.Graphics gr)
-        {
-
-        }
-
         protected override void OnBufferPaint(System.Drawing.Graphics gr)
         {
             gr.Clear(Color.White);

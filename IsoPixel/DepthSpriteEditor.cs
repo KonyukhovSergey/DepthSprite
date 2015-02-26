@@ -29,14 +29,11 @@ namespace IsoPixel
 
         public EditorModeBase Mode { get { return mode; } set { mode = value; } }
 
-        protected override void OnBufferSetup(Graphics gr)
+        protected override void OnBufferPaint(Graphics gr)
         {
             gr.InterpolationMode = InterpolationMode.NearestNeighbor;
             gr.PixelOffsetMode = PixelOffsetMode.Half;
-        }
 
-        protected override void OnBufferPaint(Graphics gr)
-        {
             gr.Clear(Color.LightGray);
 
             if (sprite != null)

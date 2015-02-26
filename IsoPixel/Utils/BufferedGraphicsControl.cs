@@ -10,9 +10,6 @@ namespace IsoPixel
 {
     public abstract class BufferedGraphicsControl : Control
     {
-        private Bitmap bitmap = null;
-        private Graphics graphics = null;
-
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
@@ -22,29 +19,9 @@ namespace IsoPixel
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            if (bitmap == null)
-            {
-                bitmap = new Bitmap(Width, Height);
-                graphics = Graphics.FromImage(bitmap);
-                OnBufferSetup(graphics);
-            }
-
-            OnBufferPaint(graphics);
-            e.Graphics.DrawImageUnscaled(bitmap, 0, 0);
+            OnBufferPaint(e.Graphics);
         }
 
-        protected override void OnResize(EventArgs e)
-        {
-            if (bitmap != null)
-            {
-                graphics.Dispose();
-                bitmap.Dispose();
-                bitmap = null;
-            }
-            Invalidate();
-        }
-
-        protected abstract void OnBufferSetup(Graphics gr);
         protected abstract void OnBufferPaint(Graphics gr);
     }
 }
