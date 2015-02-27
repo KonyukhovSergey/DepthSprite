@@ -54,6 +54,7 @@
     <Compile Include="Commands\CommandAddSubSprite.cs" />
     <Compile Include="Commands\CommandSetZ.cs" />
     <Compile Include="Commands\CommandSetColor.cs" />
+    <Compile Include="IsoControls\IsoControl.cs" />
     <Compile Include="DepthSpriteEditor.cs">
       <SubType>Component</SubType>
     </Compile>

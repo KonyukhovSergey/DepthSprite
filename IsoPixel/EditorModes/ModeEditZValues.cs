@@ -13,14 +13,14 @@ namespace IsoPixel
         private Point startMouseLocation = new Point();
         private bool isMove = false;
 
-        public ModeEditZValues(DepthSpriteEditor editor) : base(editor) { }
+        public ModeEditZValues(IsoEdit editor) : base(editor) { }
 
         public override bool OnMouseDown(System.Windows.Forms.MouseEventArgs e)
         {
             isMove = true;
             startMouseLocation = e.Location;
-            startObjectLocation.X = editor.left;
-            startObjectLocation.Y = editor.top;
+//            startObjectLocation.X = editor.left;
+//            startObjectLocation.Y = editor.top;
             return true;
         }
 
@@ -28,8 +28,8 @@ namespace IsoPixel
         {
             if (isMove)
             {
-                editor.left = (e.X - startMouseLocation.X) + startObjectLocation.X;
-                editor.top = (e.Y - startMouseLocation.Y) + startObjectLocation.Y;
+//                editor.left = (e.X - startMouseLocation.X) + startObjectLocation.X;
+//                editor.top = (e.Y - startMouseLocation.Y) + startObjectLocation.Y;
 
                 //if (editor.left >= editor.Width) { editor.left = editor.Width; }
                 //if (editor.left + editor.Sprite.Width * editor.zoom < 0) { editor.left = -editor.Sprite.Width * editor.zoom; }

@@ -20,15 +20,6 @@ namespace IsoPixel
             set { sprite = value; Invalidate(); }
         }
 
-        public DepthSpriteEditor()
-        {
-            mode = new EditorModeBase(this);
-        }
-
-        private EditorModeBase mode;
-
-        public EditorModeBase Mode { get { return mode; } set { mode = value; } }
-
         protected override void OnBufferPaint(Graphics gr)
         {
             gr.InterpolationMode = InterpolationMode.NearestNeighbor;
@@ -48,53 +39,53 @@ namespace IsoPixel
                 //}
             }
 
-            mode.OnDraw(gr);
+            //mode.OnDraw(gr);
         }
 
-        protected override void OnMouseEnter(EventArgs e)
-        {
-            Focus();
-            base.OnMouseEnter(e);
-        }
+        //protected override void OnMouseEnter(EventArgs e)
+        //{
+        //    Focus();
+        //    base.OnMouseEnter(e);
+        //}
 
-        protected override void OnKeyDown(System.Windows.Forms.KeyEventArgs e)
-        {
-            if (mode.OnKeyDown(e))
-            {
-                return;
-            }
+        //protected override void OnKeyDown(System.Windows.Forms.KeyEventArgs e)
+        //{
+        //    if (mode.OnKeyDown(e))
+        //    {
+        //        return;
+        //    }
 
-            base.OnKeyDown(e);
-        }
+        //    base.OnKeyDown(e);
+        //}
 
-        protected override void OnMouseDown(System.Windows.Forms.MouseEventArgs e)
-        {
-            if (mode.OnMouseDown(e))
-            {
-                return;
-            }
+        //protected override void OnMouseDown(System.Windows.Forms.MouseEventArgs e)
+        //{
+        //    if (mode.OnMouseDown(e))
+        //    {
+        //        return;
+        //    }
 
-            base.OnMouseDown(e);
-        }
+        //    base.OnMouseDown(e);
+        //}
 
-        protected override void OnMouseMove(System.Windows.Forms.MouseEventArgs e)
-        {
-            if (mode.OnMouseMove(e))
-            {
-                return;
-            }
+        //protected override void OnMouseMove(System.Windows.Forms.MouseEventArgs e)
+        //{
+        //    if (mode.OnMouseMove(e))
+        //    {
+        //        return;
+        //    }
 
-            base.OnMouseMove(e);
-        }
+        //    base.OnMouseMove(e);
+        //}
 
-        protected override void OnMouseUp(System.Windows.Forms.MouseEventArgs e)
-        {
-            if (mode.OnMouseUp(e))
-            {
-                return;
-            }
+        //protected override void OnMouseUp(System.Windows.Forms.MouseEventArgs e)
+        //{
+        //    if (mode.OnMouseUp(e))
+        //    {
+        //        return;
+        //    }
 
-            base.OnMouseUp(e);
-        }
+        //    base.OnMouseUp(e);
+        //}
     }
 }
