@@ -18,12 +18,15 @@ namespace IsoPixel
 
         public IsoEdit()
         {
-            root = new IsoControl(0, 0, 400, 300);
+            root = new IsoMouseTest(0, 0, 400, 300);
 
-            root.Add(new IsoControl(4, 4, 80, 200));
-            root.Add(new IsoControl(200, 200, 80, 20, AnchorStyles.Right | AnchorStyles.Bottom));
-            root.Add(new IsoControl(100, 4, 80, 100, AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right));
-            root.Add(new IsoControl(150, 150, 100, 100, AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right|AnchorStyles.Bottom));
+            root.Add(new IsoMouseTest(4, 30, 80, 200));
+            root.Add(new IsoMouseTest(250, 200, 80, 40, AnchorStyles.Right | AnchorStyles.Bottom));
+            root.Add(new IsoMouseTest(100, 34, 80, 100, AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right));
+            IsoControl c = new IsoMouseTest(150, 150, 100, 100, AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom);
+            root.Add(c);
+            c.Add(new IsoMouseTest(4, 34, 30, 20));
+            c.Add(new IsoMouseTest(64, 74, 30, 30, AnchorStyles.Right | AnchorStyles.Bottom));
 
             InitializeComponent();
             DoubleBuffered = true;
@@ -39,6 +42,12 @@ namespace IsoPixel
         {
             root.UpdateBounds(0, 0, ClientSize.Width, ClientSize.Height);
             base.OnSizeChanged(e);
+        }
+
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            root.OnMouseMove(e.X, e.Y);
+            Invalidate();
         }
     }
 }

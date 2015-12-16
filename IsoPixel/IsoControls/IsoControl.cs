@@ -48,6 +48,14 @@ namespace IsoPixel.IsoControls
         public int Width { get { return width; } }
         public int Height { get { return height; } }
 
+        public virtual void OnMouseMove(int x, int y)
+        {
+            foreach (var control in controls)
+            {
+                control.OnMouseMove(x - control.left, y - control.top);
+            }
+        }
+
         public virtual void OnSize(int width, int height)
         {
 
@@ -71,8 +79,6 @@ namespace IsoPixel.IsoControls
 
         public virtual void OnPaint(Graphics gr)
         {
-             gr.Clear(Color.WhiteSmoke);
-            gr.DrawRectangle(Pens.Black, 2, 2, width - 5, height - 5);
         }
 
         public void Add(IsoControl control)

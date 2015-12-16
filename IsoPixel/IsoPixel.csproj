@@ -62,6 +62,7 @@
     <Compile Include="EditorModes\EditorModeBase.cs" />
     <Compile Include="EditorModes\ModeEditZValues.cs" />
     <Compile Include="EditorModes\ModeSetupView.cs" />
+    <Compile Include="IsoControls\IsoMouseTest.cs" />
     <Compile Include="Utils\RLE.cs" />
     <Compile Include="Utils\FastGraphics.cs" />
     <Compile Include="Utils\BitmapList.cs">
